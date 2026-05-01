@@ -40,6 +40,12 @@ const base = import.meta.env.BASE_URL
     position: relative;
     background: var(--bg-soft);
     margin-top: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 0;
   }
   .footer__corner {
     position: absolute;
@@ -52,7 +58,7 @@ const base = import.meta.env.BASE_URL
   .footer__corner--br { bottom: 12px; right: 12px; transform: rotate(180deg); }
   .footer__eyebrow {
     font-family: var(--font-engraved);
-    font-size: 11px;
+    font-size: 10px;
     letter-spacing: 0.4em;
     text-transform: uppercase;
     color: var(--accent-gold);
@@ -61,14 +67,14 @@ const base = import.meta.env.BASE_URL
   .footer__lead {
     font-family: var(--font-serif);
     font-style: italic;
-    font-size: 22px;
+    font-size: 18px;
     color: var(--ink-secondary);
-    margin: 0 0 40px;
-    line-height: 1.4;
+    margin: 0 0 32px;
+    line-height: 1.45;
   }
   .footer__couple-name {
     font-family: var(--font-script);
-    font-size: 64px;
+    font-size: 52px;
     color: var(--ink-primary);
     margin: 0;
     line-height: 0.95;
@@ -76,26 +82,26 @@ const base = import.meta.env.BASE_URL
   .footer__amp {
     display: inline-block;
     font-family: var(--font-engraved);
-    font-size: 22px;
+    font-size: 18px;
     color: var(--accent-gold-deep);
-    margin: 10px 0;
+    margin: 8px 0;
     letter-spacing: 0.05em;
   }
   .footer__sprig {
-    width: 80px;
-    height: 24px;
-    margin: 32px auto 12px;
+    width: 72px;
+    height: 22px;
+    margin: 26px auto 12px;
     color: var(--accent-gold);
     display: block;
   }
   .footer__cursive {
     font-family: var(--font-script);
-    font-size: 56px;
+    font-size: 44px;
     color: var(--accent-gold-deep);
     margin: 12px 0 0;
   }
   @media (min-width: 768px) {
-    .footer__couple-name { font-size: 80px; }
-    .footer__cursive { font-size: 68px; }
+    .footer__couple-name { font-size: 64px; }
+    .footer__cursive { font-size: 56px; }
   }
 </style>

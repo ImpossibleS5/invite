@@ -77,13 +77,14 @@ const menu = [
   .menu__backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(58, 53, 48, 0.35);
+    background: rgba(45, 38, 32, 0.55);
+    backdrop-filter: blur(2px);
     border: none;
     padding: 0;
     cursor: pointer;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 250ms ease-out;
+    transition: opacity 280ms var(--ease-out);
     z-index: 55;
   }
   .menu__backdrop[data-open='true'] {
@@ -110,13 +111,14 @@ const menu = [
   @media (min-width: 768px) {
     .menu {
       inset: 0 0 0 auto;
-      width: 360px;
+      width: 320px;
       background: var(--bg-paper);
       transform: translateX(100%);
-      box-shadow: -8px 0 60px rgba(45, 38, 32, 0.18);
+      box-shadow: -16px 0 60px rgba(45, 38, 32, 0.25);
+      border-left: 1px solid var(--line-strong);
       justify-content: flex-start;
       align-items: flex-start;
-      padding: 80px 40px 40px;
+      padding: 72px 36px 36px;
       transition: transform 380ms var(--ease-drawer);
     }
   }
@@ -141,22 +143,28 @@ const menu = [
   @media (min-width: 768px) {
     .menu ul { text-align: left; width: 100%; }
   }
+  .menu li + li {
+    border-top: 1px solid var(--line-soft);
+  }
   .menu__link {
     display: block;
     padding: 16px 0;
     font-family: var(--font-engraved);
     font-weight: 500;
-    font-size: 18px;
-    letter-spacing: 0.18em;
+    font-size: 14px;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--ink-primary);
     border-bottom: none;
     transition: color 180ms var(--ease-out), letter-spacing 220ms var(--ease-out);
   }
+  @media (min-width: 768px) {
+    .menu__link { font-size: 13px; }
+  }
   @media (hover: hover) and (pointer: fine) {
     .menu__link:hover {
       color: var(--accent-gold-deep);
-      letter-spacing: 0.22em;
+      letter-spacing: 0.26em;
     }
   }
 </style>

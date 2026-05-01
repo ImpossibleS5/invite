@@ -57,91 +57,91 @@ const weekdaysShort = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
   .letter__hello {
     font-family: var(--font-script);
     font-weight: 400;
-    font-size: 64px;
+    font-size: 48px;
     color: var(--ink-primary);
-    margin: 0 0 36px;
+    margin: 0 0 28px;
     line-height: 0.95;
   }
   @media (min-width: 768px) {
-    .letter__hello { font-size: 84px; }
+    .letter__hello { font-size: 60px; }
   }
 
   .letter__body {
     font-family: var(--font-serif);
     font-style: italic;
-    font-size: 20px;
+    font-size: 17px;
     color: var(--ink-secondary);
-    margin: 0 0 28px;
-    line-height: 1.65;
+    margin: 0 0 22px;
+    line-height: 1.6;
   }
 
   .letter__body--lead::first-letter {
     font-family: var(--font-script);
     font-style: normal;
-    font-size: 76px;
+    font-size: 56px;
     line-height: 0.85;
     float: left;
     color: var(--accent-rose-deep);
-    padding: 6px 10px 0 0;
-    margin-top: 4px;
+    padding: 4px 8px 0 0;
+    margin-top: 2px;
   }
 
   .letter__highlight {
     font-family: var(--font-script);
-    font-size: 78px;
+    font-size: 56px;
     color: var(--accent-rose-deep);
-    margin: 0 0 8px;
+    margin: 0 0 6px;
     line-height: 0.95;
     position: relative;
     display: inline-block;
   }
   .letter__highlight-mark {
     display: block;
-    width: 80px;
+    width: 72px;
     height: 12px;
-    margin: 4px auto 32px;
+    margin: 4px auto 26px;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 12' fill='none'><path d='M2 6 C 20 1 60 1 78 6' stroke='%23A87E7E' stroke-width='1' stroke-linecap='round'/><circle cx='40' cy='6' r='1.5' fill='%23A87E7E'/></svg>");
     background-repeat: no-repeat;
     background-position: center;
   }
   @media (min-width: 768px) {
-    .letter__highlight { font-size: 100px; }
+    .letter__highlight { font-size: 76px; }
   }
 
   .letter__waiting {
     font-family: var(--font-engraved);
-    font-size: 11px;
+    font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.4em;
     color: var(--ink-muted);
-    margin: 32px 0 14px;
+    margin: 26px 0 12px;
   }
   .letter__date {
     font-family: var(--font-engraved);
-    font-size: 26px;
+    font-size: 22px;
     font-weight: 500;
     letter-spacing: 0.06em;
     color: var(--accent-gold-deep);
-    margin: 0 0 32px;
+    margin: 0 0 26px;
   }
 
   .calendar {
     background: var(--bg-paper);
     border: 1px solid var(--line-soft);
     border-radius: var(--radius-card);
-    padding: 22px 18px 18px;
+    padding: 18px 14px 14px;
     box-shadow: var(--shadow-soft);
-    max-width: 360px;
+    max-width: 320px;
     margin: 0 auto;
   }
   .calendar__header {
     font-family: var(--font-engraved);
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.32em;
     text-transform: uppercase;
     color: var(--accent-gold-deep);
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
   .calendar__weekdays,
   .calendar__grid {
@@ -163,7 +163,7 @@ const weekdaysShort = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
     align-items: center;
     justify-content: center;
     font-family: var(--font-serif);
-    font-size: 16px;
+    font-size: 14px;
     color: var(--ink-primary);
     border-radius: 50%;
     transition: background 200ms var(--ease-out);

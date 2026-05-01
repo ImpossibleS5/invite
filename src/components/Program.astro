@@ -87,23 +87,23 @@ type Icon = typeof icons[number]
   .timeline::before {
     content: '';
     position: absolute;
-    left: 27px;
-    top: 32px;
-    bottom: 32px;
+    left: 23px;
+    top: 28px;
+    bottom: 28px;
     width: 1px;
     background: linear-gradient(180deg, transparent, var(--accent-gold) 10%, var(--accent-gold) 90%, transparent);
     opacity: 0.5;
   }
   .timeline__item {
     display: flex;
-    gap: 24px;
-    padding: 16px 0;
+    gap: 20px;
+    padding: 14px 0;
     position: relative;
   }
   .timeline__stamp {
-    flex: 0 0 56px;
-    width: 56px;
-    height: 56px;
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     background: var(--bg-paper);
     border: 1px solid var(--accent-gold);
@@ -115,7 +115,7 @@ type Icon = typeof icons[number]
     z-index: 1;
     transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
   }
-  .timeline__stamp svg { width: 30px; height: 30px; }
+  .timeline__stamp svg { width: 26px; height: 26px; }
   @media (hover: hover) and (pointer: fine) {
     .timeline__item:hover .timeline__stamp {
       transform: scale(1.06);
@@ -125,27 +125,27 @@ type Icon = typeof icons[number]
   .timeline__body { padding-top: 6px; }
   .timeline__time {
     font-family: var(--font-engraved);
-    font-size: 28px;
+    font-size: 22px;
     font-weight: 500;
     color: var(--accent-gold-deep);
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     line-height: 1;
     letter-spacing: 0.02em;
   }
   .timeline__title {
     font-family: var(--font-engraved);
     font-weight: 500;
-    font-size: 12px;
+    font-size: 11px;
     color: var(--ink-primary);
     text-transform: uppercase;
     letter-spacing: 0.22em;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
   .timeline__place {
     font-family: var(--font-serif);
     font-style: italic;
-    font-size: 17px;
+    font-size: 15px;
     color: var(--ink-secondary);
-    line-height: 1.5;
+    line-height: 1.45;
   }
 </style>
