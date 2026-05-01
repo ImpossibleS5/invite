@@ -7,6 +7,7 @@ type Icon = typeof icons[number]
 
 <section class="program section" id="program">
   <div class="container">
+    <p class="program__eyebrow">— расписание —</p>
     <h2 class="section-title">Программа дня</h2>
     <div class="divider">
       <svg viewBox="0 0 60 12" width="56" height="12" aria-hidden="true">
@@ -21,11 +22,11 @@ type Icon = typeof icons[number]
       </svg>
     </div>
 
-    <ol class="timeline">
+    <ol class="timeline" id="program-timeline">
       {wedding.program.map((item, i) => {
         const icon: Icon = (icons[i] ?? 'bouquet') as Icon
         return (
-          <li class="timeline__item">
+          <li class="timeline__item" data-stagger={i}>
             <div class="timeline__stamp" aria-hidden="true">
               {icon === 'bouquet' && (
                 <svg viewBox="0 0 40 40">
@@ -76,76 +77,152 @@ type Icon = typeof icons[number]
 
 <style>
   .program { text-align: left; }
-  .program .section-title { text-align: center; }
+  .program .section-title,
+  .program .divider,
+  .program__eyebrow { text-align: center; }
+  .program .divider { margin-bottom: 56px; }
+
+  .program__eyebrow {
+    font-family: var(--font-engraved);
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    text-align: center;
+    margin: 0 0 14px;
+  }
 
   .timeline {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 0 auto;
+    max-width: 440px;
     position: relative;
   }
   .timeline::before {
     content: '';
     position: absolute;
-    left: 23px;
-    top: 28px;
-    bottom: 28px;
+    left: 36px;
+    top: 36px;
+    bottom: 36px;
     width: 1px;
-    background: linear-gradient(180deg, transparent, var(--accent-gold) 10%, var(--accent-gold) 90%, transparent);
-    opacity: 0.5;
+    background: linear-gradient(180deg, transparent, var(--accent-gold) 8%, var(--accent-gold) 92%, transparent);
+    opacity: 0.55;
   }
+
+  /* Items: staggered scroll-triggered fade-in. Initial state hidden. */
   .timeline__item {
     display: flex;
-    gap: 20px;
-    padding: 14px 0;
+    gap: 28px;
+    padding: 22px 0;
     position: relative;
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 700ms var(--ease-out),
+      transform 700ms var(--ease-out);
   }
+  .timeline__item.is-revealed {
+    opacity: 1;
+    transform: none;
+  }
+  /* Stagger delays (~120ms per item) take effect once .is-revealed is added */
+  .timeline__item[data-stagger='0'] { transition-delay: 0ms; }
+  .timeline__item[data-stagger='1'] { transition-delay: 140ms; }
+  .timeline__item[data-stagger='2'] { transition-delay: 280ms; }
+  .timeline__item[data-stagger='3'] { transition-delay: 420ms; }
+
   .timeline__stamp {
-    flex: 0 0 48px;
-    width: 48px;
-    height: 48px;
+    flex: 0 0 72px;
+    width: 72px;
+    height: 72px;
     border-radius: 50%;
-    background: var(--bg-paper);
+    background: linear-gradient(135deg, #FFFFFF, #FBF4E8);
     border: 1px solid var(--accent-gold);
-    box-shadow: var(--shadow-soft);
+    box-shadow: var(--shadow-soft), inset 0 0 0 4px rgba(255, 255, 255, 0.7);
     color: var(--accent-gold-deep);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1;
-    transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+    transition: transform 240ms var(--ease-out), box-shadow 240ms var(--ease-out);
   }
-  .timeline__stamp svg { width: 26px; height: 26px; }
+  .timeline__stamp svg { width: 36px; height: 36px; }
   @media (hover: hover) and (pointer: fine) {
     .timeline__item:hover .timeline__stamp {
-      transform: scale(1.06);
-      box-shadow: var(--shadow-card);
+      transform: scale(1.06) rotate(-2deg);
+      box-shadow: var(--shadow-card), inset 0 0 0 4px rgba(255, 255, 255, 0.9);
     }
   }
-  .timeline__body { padding-top: 6px; }
+
+  .timeline__body {
+    padding-top: 8px;
+    flex: 1 1 auto;
+  }
   .timeline__time {
     font-family: var(--font-engraved);
-    font-size: 22px;
+    font-size: 32px;
     font-weight: 500;
     color: var(--accent-gold-deep);
-    margin-bottom: 4px;
+    margin-bottom: 6px;
     line-height: 1;
     letter-spacing: 0.02em;
   }
   .timeline__title {
     font-family: var(--font-engraved);
     font-weight: 500;
-    font-size: 11px;
+    font-size: 12px;
     color: var(--ink-primary);
     text-transform: uppercase;
-    letter-spacing: 0.22em;
-    margin-bottom: 4px;
+    letter-spacing: 0.26em;
+    margin-bottom: 8px;
   }
   .timeline__place {
     font-family: var(--font-serif);
     font-style: italic;
-    font-size: 15px;
+    font-size: 17px;
     color: var(--ink-secondary);
-    line-height: 1.45;
+    line-height: 1.5;
+  }
+
+  @media (min-width: 768px) {
+    .timeline__stamp { flex-basis: 84px; width: 84px; height: 84px; }
+    .timeline__stamp svg { width: 42px; height: 42px; }
+    .timeline::before { left: 42px; }
+    .timeline__time { font-size: 36px; }
+    .timeline__title { font-size: 13px; }
+    .timeline__place { font-size: 18px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .timeline__item {
+      opacity: 1;
+      transform: none;
+      transition-delay: 0ms !important;
+    }
   }
 </style>
+
+<script>
+  // Reveal each timeline item only when it scrolls into view.
+  // Combined with CSS transition-delays, this produces a staggered cascade
+  // when the user reaches the program section.
+  const items = document.querySelectorAll<HTMLElement>('#program-timeline .timeline__item')
+  if (items.length > 0 && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed')
+            observer.unobserve(entry.target)
+          }
+        }
+      },
+      { threshold: 0.25, rootMargin: '0px 0px -10% 0px' }
+    )
+    items.forEach((el) => observer.observe(el))
+  } else {
+    // No IO support — show immediately
+    items.forEach((el) => el.classList.add('is-revealed'))
+  }
+</script>
