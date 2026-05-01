@@ -250,6 +250,13 @@ const audioSrc = wedding.music.src
   } else {
     window.setTimeout(() => {
       prompt.hidden = false
+      // Auto-dismiss after 10s if user doesn't interact — treat as 'asked-no'.
+      window.setTimeout(() => {
+        if (prompt.hidden) return // user already clicked yes/no
+        prompt.hidden = true
+        setToggleState(false)
+        localStorage.setItem(STORAGE_KEY, 'asked-no' as Pref)
+      }, 10000)
     }, wedding.music.autoPromptDelayMs)
   }
 </script>
