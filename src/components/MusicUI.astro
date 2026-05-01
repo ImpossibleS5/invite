@@ -1,0 +1,193 @@
+---
+import { wedding } from '../data/wedding'
+const base = import.meta.env.BASE_URL
+const audioSrc = wedding.music.src
+  ? wedding.music.src.startsWith('/')
+    ? `${base}${wedding.music.src.slice(1)}`
+    : wedding.music.src
+  : ''
+---
+
+<div class="music">
+  <audio id="music-audio" loop preload="none" src={audioSrc}></audio>
+
+  <div class="music-prompt" id="music-prompt" hidden>
+    <span class="music-prompt__icon">♪</span>
+    <span class="music-prompt__text">Включить фоновую музыку?</span>
+    <div class="music-prompt__actions">
+      <button class="music-prompt__yes" id="music-yes">Да ✨</button>
+      <button class="music-prompt__no" id="music-no">Не сейчас</button>
+    </div>
+  </div>
+
+  <button class="music-toggle" id="music-toggle" aria-label="Включить/выключить музыку" hidden>
+    <span id="music-toggle-icon">♪</span>
+  </button>
+
+  <div class="music-toast" id="music-toast" hidden></div>
+</div>
+
+<style>
+  .music-prompt,
+  .music-toggle,
+  .music-toast {
+    position: fixed;
+    z-index: 100;
+  }
+  .music-prompt {
+    right: 16px;
+    bottom: 16px;
+    background: var(--bg-paper);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-card);
+    padding: 14px 16px;
+    box-shadow: var(--shadow-card);
+    max-width: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    text-align: center;
+  }
+  .music-prompt__icon { font-size: 20px; color: var(--accent-gold-deep); }
+  .music-prompt__text {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-secondary);
+  }
+  .music-prompt__actions { display: flex; gap: 8px; }
+  .music-prompt__yes,
+  .music-prompt__no {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    border-radius: var(--radius-pill);
+    padding: 6px 14px;
+    border: 1px solid var(--accent-gold);
+    background: transparent;
+    color: var(--accent-gold-deep);
+  }
+  .music-prompt__yes {
+    background: var(--accent-rose);
+    color: #fff;
+    border-color: var(--accent-rose);
+  }
+
+  .music-toggle {
+    right: 16px;
+    bottom: 16px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--bg-paper);
+    border: 1px solid var(--line-soft);
+    box-shadow: var(--shadow-soft);
+    color: var(--accent-gold-deep);
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .music-toggle[data-on='true'] {
+    background: var(--accent-rose);
+    color: #fff;
+    border-color: var(--accent-rose);
+  }
+
+  .music-toast {
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%);
+    background: var(--ink-primary);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: var(--radius-pill);
+    font-size: 13px;
+    font-family: var(--font-sans);
+  }
+</style>
+
+<script>
+  import { wedding } from '../data/wedding'
+
+  const audio = document.getElementById('music-audio') as HTMLAudioElement
+  const prompt = document.getElementById('music-prompt')!
+  const yes = document.getElementById('music-yes')!
+  const no = document.getElementById('music-no')!
+  const toggle = document.getElementById('music-toggle') as HTMLButtonElement
+  const toggleIcon = document.getElementById('music-toggle-icon')!
+  const toast = document.getElementById('music-toast')!
+  const headerBtn = document.getElementById('music-toggle-header')
+
+  const STORAGE_KEY = 'music_pref'
+  type Pref = 'on' | 'off' | 'asked-no'
+
+  audio.volume = 0.4
+
+  function setToggleState(on: boolean) {
+    toggle.dataset.on = String(on)
+    toggleIcon.textContent = on ? '♪' : '♪'
+    toggle.hidden = false
+  }
+
+  function showToast(text: string) {
+    toast.textContent = text
+    toast.hidden = false
+    window.setTimeout(() => (toast.hidden = true), 2500)
+  }
+
+  async function tryPlay() {
+    if (!audio.src || audio.src === window.location.href) {
+      showToast(wedding.music.placeholderToast)
+      return false
+    }
+    try {
+      await audio.play()
+      return true
+    } catch {
+      showToast('Браузер заблокировал автозапуск. Нажмите ♪')
+      return false
+    }
+  }
+
+  function pause() {
+    audio.pause()
+  }
+
+  yes.addEventListener('click', async () => {
+    prompt.hidden = true
+    const ok = await tryPlay()
+    setToggleState(ok)
+    localStorage.setItem(STORAGE_KEY, ok ? ('on' as Pref) : ('off' as Pref))
+  })
+
+  no.addEventListener('click', () => {
+    prompt.hidden = true
+    setToggleState(false)
+    localStorage.setItem(STORAGE_KEY, 'asked-no' as Pref)
+  })
+
+  toggle.addEventListener('click', async () => {
+    if (audio.paused) {
+      const ok = await tryPlay()
+      if (ok) setToggleState(true)
+    } else {
+      pause()
+      setToggleState(false)
+    }
+  })
+
+  headerBtn?.addEventListener('click', () => toggle.click())
+
+  const pref = localStorage.getItem(STORAGE_KEY) as Pref | null
+  if (pref === 'on') {
+    setToggleState(false)
+    // require user gesture for autoplay; show toggle only
+  } else if (pref === 'asked-no' || pref === 'off') {
+    setToggleState(false)
+  } else {
+    window.setTimeout(() => {
+      prompt.hidden = false
+    }, wedding.music.autoPromptDelayMs)
+  }
+</script>
