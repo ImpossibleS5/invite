@@ -4,6 +4,9 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
+/* The HTML hidden attribute should always win over component display rules */
+[hidden] { display: none !important; }
+
 html {
   scroll-behavior: smooth;
 }
