@@ -1,0 +1,84 @@
+---
+import { wedding } from '../data/wedding'
+---
+
+<section class="dresscode section" id="dresscode">
+  <div class="container">
+    <h2 class="section-title">Дресс-код</h2>
+    <div class="divider"><span>❀</span></div>
+
+    <p class="dresscode__intro">{wedding.dressCode.intro}</p>
+
+    <ul class="palette">
+      {wedding.dressCode.palette.map((c) => (
+        <li class="palette__item">
+          <div class="palette__swatch" style={`background:${c.hex}`}></div>
+          <div class="palette__name">{c.name}</div>
+          <div class="palette__pantone">PANTONE {c.pantone}</div>
+        </li>
+      ))}
+    </ul>
+
+    <p class="dresscode__note">{wedding.dressCode.note}</p>
+  </div>
+</section>
+
+<style>
+  .dresscode { text-align: center; }
+  .dresscode__intro {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-secondary);
+    margin: 0 auto 32px;
+    max-width: 360px;
+    line-height: 1.6;
+  }
+  .palette {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 32px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px 12px;
+  }
+  .palette__item {
+    flex: 0 0 calc(33% - 12px);
+    max-width: 100px;
+  }
+  .palette__swatch {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    margin: 0 auto 8px;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(58, 53, 48, 0.05);
+    transition: transform 200ms ease-out;
+  }
+  .palette__item:hover .palette__swatch {
+    transform: scale(1.08);
+  }
+  .palette__name {
+    font-family: var(--font-serif);
+    font-size: 13px;
+    color: var(--ink-primary);
+    margin-bottom: 2px;
+  }
+  .palette__pantone {
+    font-family: var(--font-sans);
+    font-size: 10px;
+    color: var(--ink-muted);
+    letter-spacing: 0.05em;
+  }
+  .dresscode__note {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-muted);
+    margin: 0;
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>
