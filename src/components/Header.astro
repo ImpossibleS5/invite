@@ -45,11 +45,13 @@ const menu = [
     padding: 14px 20px;
   }
   .header__brand {
-    font-family: var(--font-serif);
-    font-size: 14px;
-    letter-spacing: 0.2em;
+    font-family: var(--font-engraved);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.42em;
     color: var(--ink-primary);
     border-bottom: none;
+    text-transform: uppercase;
   }
   .header__burger {
     background: transparent;
@@ -95,7 +97,7 @@ const menu = [
     inset: 0;
     background: var(--bg-base);
     transform: translateY(-100%);
-    transition: transform 300ms ease-out;
+    transition: transform 380ms var(--ease-drawer);
     z-index: 60;
     display: flex;
     align-items: center;
@@ -111,10 +113,11 @@ const menu = [
       width: 360px;
       background: var(--bg-paper);
       transform: translateX(100%);
-      box-shadow: -8px 0 40px rgba(58, 53, 48, 0.18);
+      box-shadow: -8px 0 60px rgba(45, 38, 32, 0.18);
       justify-content: flex-start;
       align-items: flex-start;
       padding: 80px 40px 40px;
+      transition: transform 380ms var(--ease-drawer);
     }
   }
 
@@ -141,13 +144,21 @@ const menu = [
   .menu__link {
     display: block;
     padding: 16px 0;
-    font-family: var(--font-serif);
-    font-size: 24px;
+    font-family: var(--font-engraved);
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
     color: var(--ink-primary);
     border-bottom: none;
-    transition: color 150ms ease-out;
+    transition: color 180ms var(--ease-out), letter-spacing 220ms var(--ease-out);
   }
-  .menu__link:hover { color: var(--accent-gold-deep); }
+  @media (hover: hover) and (pointer: fine) {
+    .menu__link:hover {
+      color: var(--accent-gold-deep);
+      letter-spacing: 0.22em;
+    }
+  }
 </style>
 
 <script>

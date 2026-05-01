@@ -9,27 +9,30 @@ const weekdaysShort = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
 
 <section class="letter section" id="letter">
   <div class="container">
-    <h2 class="letter__hello">Дорогие родные<br/>и друзья!</h2>
+    <h2 class="letter__hello">Дорогие родные<br/>и&nbsp;друзья</h2>
 
-    <p class="letter__body">
+    <p class="letter__body letter__body--lead">
       Вы получили это приглашение —<br/>
       а значит мы спешим сообщить вам<br/>
       важную новость:
     </p>
 
-    <p class="letter__highlight">Мы женимся!</p>
+    <p class="letter__highlight">
+      Мы&nbsp;женимся
+      <span class="letter__highlight-mark" aria-hidden="true"></span>
+    </p>
 
     <p class="letter__body">
-      Приглашаем вас разделить с нами<br/>
-      радость особенного дня и стать<br/>
+      Приглашаем вас разделить с&nbsp;нами<br/>
+      радость особенного дня и&nbsp;стать<br/>
       частью нашей семейной истории.
     </p>
 
-    <p class="letter__waiting">Ждём Вас:</p>
+    <p class="letter__waiting">— ждём вас —</p>
     <p class="letter__date">{wedding.date.pretty}</p>
 
     <div class="calendar">
-      <div class="calendar__header">{wedding.date.month} {wedding.date.year}</div>
+      <div class="calendar__header">{wedding.date.month}&nbsp;&nbsp;{wedding.date.year}</div>
       <div class="calendar__weekdays">
         {weekdaysShort.map((w) => <div class="calendar__weekday">{w}</div>)}
       </div>
@@ -50,62 +53,95 @@ const weekdaysShort = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
 
 <style>
   .letter { text-align: center; }
+
   .letter__hello {
     font-family: var(--font-script);
     font-weight: 400;
-    font-size: 52px;
+    font-size: 64px;
     color: var(--ink-primary);
-    margin: 0 0 28px;
-    line-height: 1.05;
+    margin: 0 0 36px;
+    line-height: 0.95;
   }
   @media (min-width: 768px) {
-    .letter__hello { font-size: 64px; }
+    .letter__hello { font-size: 84px; }
   }
+
   .letter__body {
     font-family: var(--font-serif);
     font-style: italic;
     font-size: 20px;
     color: var(--ink-secondary);
     margin: 0 0 28px;
-    line-height: 1.6;
+    line-height: 1.65;
   }
+
+  .letter__body--lead::first-letter {
+    font-family: var(--font-script);
+    font-style: normal;
+    font-size: 76px;
+    line-height: 0.85;
+    float: left;
+    color: var(--accent-rose-deep);
+    padding: 6px 10px 0 0;
+    margin-top: 4px;
+  }
+
   .letter__highlight {
     font-family: var(--font-script);
-    font-size: 64px;
+    font-size: 78px;
     color: var(--accent-rose-deep);
-    margin: 0 0 36px;
-    line-height: 1;
+    margin: 0 0 8px;
+    line-height: 0.95;
+    position: relative;
+    display: inline-block;
+  }
+  .letter__highlight-mark {
+    display: block;
+    width: 80px;
+    height: 12px;
+    margin: 4px auto 32px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 12' fill='none'><path d='M2 6 C 20 1 60 1 78 6' stroke='%23A87E7E' stroke-width='1' stroke-linecap='round'/><circle cx='40' cy='6' r='1.5' fill='%23A87E7E'/></svg>");
+    background-repeat: no-repeat;
+    background-position: center;
   }
   @media (min-width: 768px) {
-    .letter__highlight { font-size: 80px; }
+    .letter__highlight { font-size: 100px; }
   }
+
   .letter__waiting {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-size: 18px;
+    font-family: var(--font-engraved);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.4em;
     color: var(--ink-muted);
-    margin: 28px 0 8px;
+    margin: 32px 0 14px;
   }
   .letter__date {
-    font-family: var(--font-serif);
-    font-size: 28px;
+    font-family: var(--font-engraved);
+    font-size: 26px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
     color: var(--accent-gold-deep);
-    margin: 0 0 28px;
+    margin: 0 0 32px;
   }
+
   .calendar {
     background: var(--bg-paper);
     border: 1px solid var(--line-soft);
     border-radius: var(--radius-card);
-    padding: 18px;
+    padding: 22px 18px 18px;
     box-shadow: var(--shadow-soft);
     max-width: 360px;
     margin: 0 auto;
   }
   .calendar__header {
-    font-family: var(--font-serif);
-    font-size: 22px;
+    font-family: var(--font-engraved);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
     color: var(--accent-gold-deep);
-    margin-bottom: 14px;
+    margin-bottom: 16px;
   }
   .calendar__weekdays,
   .calendar__grid {
@@ -114,20 +150,23 @@ const weekdaysShort = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
     gap: 4px;
   }
   .calendar__weekday {
-    font-size: 12px;
+    font-family: var(--font-engraved);
+    font-size: 10px;
     color: var(--ink-muted);
     padding: 4px 0;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.18em;
   }
   .calendar__cell {
     aspect-ratio: 1 / 1;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: var(--font-serif);
     font-size: 16px;
     color: var(--ink-primary);
     border-radius: 50%;
+    transition: background 200ms var(--ease-out);
   }
   .calendar__cell--empty { color: transparent; }
   .calendar__cell--target {
@@ -135,10 +174,10 @@ const weekdaysShort = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
     color: #fff;
     font-weight: 600;
     box-shadow: 0 0 0 2px var(--accent-gold) inset;
-    animation: pulse 2.5s ease-in-out infinite;
+    animation: target-stamp 2.4s ease-in-out infinite;
   }
-  @keyframes pulse {
+  @keyframes target-stamp {
     0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.06); }
+    50%      { transform: scale(1.05); }
   }
 </style>

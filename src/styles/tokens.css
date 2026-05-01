@@ -1,19 +1,21 @@
 :root {
-  /* Backgrounds */
-  --bg-base:        #FBF8F3;
+  /* Backgrounds — warm ivory tones */
+  --bg-base:        #FDF9F0;
   --bg-paper:       #FFFFFF;
-  --bg-soft:        #F5EFE6;
+  --bg-soft:        #F4ECDC;
+  --bg-deep:        #2D2620;
 
-  /* Ink */
-  --ink-primary:    #3A3530;
-  --ink-secondary:  #6B5F55;
-  --ink-muted:      #A39788;
+  /* Ink — richer than pure grey */
+  --ink-primary:    #2D2620;
+  --ink-secondary:  #5C4F45;
+  --ink-muted:      #948578;
 
-  /* Accents */
-  --accent-gold:    #B89968;
-  --accent-gold-deep: #94793F;
-  --accent-rose:    #D4A5A5;
-  --accent-rose-deep: #B07878;
+  /* Accents — champagne + dusty sage tones */
+  --accent-gold:        #A28E5F;
+  --accent-gold-deep:   #7A6840;
+  --accent-rose:        #C9A0A0;
+  --accent-rose-deep:   #A87E7E;
+  --accent-sage:        #6D7B6B;
 
   /* Dress-code palette */
   --pal-blue:    #B8D4E8;
@@ -23,21 +25,30 @@
   --pal-mint:    #B8D8C0;
 
   /* Lines and shadows */
-  --line-soft:    #E8DFD2;
-  --shadow-soft:  0 4px 24px rgba(58, 53, 48, 0.06);
-  --shadow-card:  0 8px 32px rgba(58, 53, 48, 0.08);
+  --line-soft:     #E5DBC8;
+  --line-strong:   #C7B79A;
+  --shadow-soft:   0 4px 24px rgba(45, 38, 32, 0.06);
+  --shadow-card:   0 12px 40px rgba(45, 38, 32, 0.10);
+  --shadow-deep:   0 20px 60px rgba(45, 38, 32, 0.14);
 
-  /* Typography */
-  --font-script:  'Pinyon Script', cursive;
-  --font-serif:   'Cormorant Garamond', serif;
-  --font-sans:    'Inter', system-ui, sans-serif;
+  /* Typography — distinctive, no Inter */
+  --font-engraved: 'Cinzel', 'Trajan Pro', 'Times New Roman', serif;
+  --font-script:   'Allura', 'Pinyon Script', cursive;
+  --font-serif:    'Cormorant Garamond', 'Cormorant', 'Georgia', serif;
+  --font-sans:     'Outfit', system-ui, sans-serif;
 
   /* Layout */
-  --container-w:  480px;
-  --section-gap:  80px;
-  --section-gap-lg: 120px;
-  --radius-card:  16px;
-  --radius-pill:  999px;
+  --container-w:   480px;
+  --section-gap:   100px;
+  --section-gap-lg: 160px;
+  --radius-card:   16px;
+  --radius-pill:   999px;
+
+  /* Easing curves (Emil-style) */
+  --ease-out:       cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out:    cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer:    cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-press:     cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @media (min-width: 768px) {

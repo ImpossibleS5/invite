@@ -40,7 +40,7 @@ const audioSrc = wedding.music.src
     background: var(--bg-paper);
     border: 1px solid var(--line-soft);
     border-radius: var(--radius-card);
-    padding: 24px 28px 22px;
+    padding: 26px 28px 22px;
     box-shadow: var(--shadow-card);
     max-width: 360px;
     width: calc(100vw - 40px);
@@ -49,11 +49,12 @@ const audioSrc = wedding.music.src
     gap: 14px;
     align-items: center;
     text-align: center;
-    animation: music-prompt-in 320ms ease-out;
+    transform-origin: bottom right;
+    animation: music-prompt-in 380ms var(--ease-drawer);
   }
   @keyframes music-prompt-in {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: none; }
+    from { opacity: 0; transform: translateY(20px) scale(0.96); filter: blur(4px); }
+    to   { opacity: 1; transform: none; filter: blur(0); }
   }
   .music-prompt__icon {
     font-size: 28px;
@@ -71,28 +72,34 @@ const audioSrc = wedding.music.src
   .music-prompt__actions {
     display: flex;
     gap: 10px;
-    margin-top: 4px;
+    margin-top: 6px;
   }
   .music-prompt__yes,
   .music-prompt__no {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-size: 16px;
+    font-family: var(--font-engraved);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
     border-radius: var(--radius-pill);
-    padding: 9px 22px;
+    padding: 11px 22px;
     border: 1px solid var(--accent-gold);
     background: transparent;
     color: var(--accent-gold-deep);
     cursor: pointer;
-    transition: background 150ms ease-out, color 150ms ease-out;
+    transition: background 180ms var(--ease-out), color 180ms var(--ease-out), transform 160ms var(--ease-press);
   }
   .music-prompt__yes {
     background: var(--accent-rose);
     color: #fff;
     border-color: var(--accent-rose);
   }
-  .music-prompt__yes:hover { background: var(--accent-rose-deep); border-color: var(--accent-rose-deep); }
-  .music-prompt__no:hover { background: rgba(184, 153, 104, 0.1); }
+  @media (hover: hover) and (pointer: fine) {
+    .music-prompt__yes:hover { background: var(--accent-rose-deep); border-color: var(--accent-rose-deep); }
+    .music-prompt__no:hover  { background: rgba(162, 142, 95, 0.10); }
+  }
+  .music-prompt__yes:active,
+  .music-prompt__no:active { transform: scale(0.96); }
 
   .music-toggle {
     right: 20px;
@@ -109,9 +116,16 @@ const audioSrc = wedding.music.src
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: background 150ms ease-out, color 150ms ease-out, transform 150ms ease-out;
+    transition: background 220ms var(--ease-out), color 220ms var(--ease-out),
+                transform 200ms var(--ease-out), box-shadow 220ms var(--ease-out);
   }
-  .music-toggle:hover { transform: scale(1.06); }
+  @media (hover: hover) and (pointer: fine) {
+    .music-toggle:hover {
+      transform: scale(1.06);
+      box-shadow: var(--shadow-card);
+    }
+  }
+  .music-toggle:active { transform: scale(0.94); }
   .music-toggle[data-on='true'] {
     background: var(--accent-rose);
     color: #fff;
@@ -124,10 +138,13 @@ const audioSrc = wedding.music.src
     transform: translateX(-50%);
     background: var(--ink-primary);
     color: #fff;
-    padding: 10px 16px;
+    padding: 10px 18px;
     border-radius: var(--radius-pill);
-    font-size: 13px;
-    font-family: var(--font-sans);
+    font-size: 11px;
+    font-family: var(--font-engraved);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    box-shadow: var(--shadow-card);
   }
 </style>
 

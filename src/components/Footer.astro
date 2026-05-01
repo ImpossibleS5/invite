@@ -8,10 +8,28 @@ const base = import.meta.env.BASE_URL
     <img class="footer__corner footer__corner--tl" src={`${base}decor/branch-corner.svg`} alt="" />
     <img class="footer__corner footer__corner--br" src={`${base}decor/branch-corner.svg`} alt="" />
 
-    <p class="footer__lead">Будем рады видеть вас<br/>на нашем празднике!</p>
+    <p class="footer__eyebrow">— With love —</p>
+    <p class="footer__lead">Будем рады видеть вас<br/>на нашем празднике</p>
+
     <p class="footer__couple-name">{wedding.couple.bride}</p>
-    <p class="footer__amp">и</p>
+    <span class="footer__amp" aria-hidden="true">&amp;</span>
     <p class="footer__couple-name">{wedding.couple.groom}</p>
+
+    <svg class="footer__sprig" viewBox="0 0 80 24" aria-hidden="true">
+      <g stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round">
+        <path d="M40 4 L40 22"/>
+        <path d="M40 8 C 30 5 18 5 8 9"/>
+        <path d="M40 8 C 50 5 62 5 72 9"/>
+        <path d="M40 14 C 32 12 22 12 14 14"/>
+        <path d="M40 14 C 48 12 58 12 66 14"/>
+      </g>
+      <ellipse cx="10" cy="9.5" rx="3.6" ry="1.2" transform="rotate(-25 10 9.5)" fill="currentColor"/>
+      <ellipse cx="70" cy="9.5" rx="3.6" ry="1.2" transform="rotate(25 70 9.5)" fill="currentColor"/>
+      <ellipse cx="16" cy="14.5" rx="3" ry="1" transform="rotate(-15 16 14.5)" fill="currentColor"/>
+      <ellipse cx="64" cy="14.5" rx="3" ry="1" transform="rotate(15 64 14.5)" fill="currentColor"/>
+      <circle cx="40" cy="22" r="1.5" fill="currentColor"/>
+    </svg>
+
     <p class="footer__cursive"><span lang="en">See you soon</span></p>
   </div>
 </footer>
@@ -32,36 +50,52 @@ const base = import.meta.env.BASE_URL
   }
   .footer__corner--tl { top: 12px; left: 12px; }
   .footer__corner--br { bottom: 12px; right: 12px; transform: rotate(180deg); }
+  .footer__eyebrow {
+    font-family: var(--font-engraved);
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin: 0 0 12px;
+  }
   .footer__lead {
     font-family: var(--font-serif);
     font-style: italic;
     font-size: 22px;
     color: var(--ink-secondary);
-    margin: 0 0 36px;
+    margin: 0 0 40px;
     line-height: 1.4;
   }
   .footer__couple-name {
     font-family: var(--font-script);
-    font-size: 56px;
+    font-size: 64px;
     color: var(--ink-primary);
     margin: 0;
-    line-height: 1;
+    line-height: 0.95;
   }
   .footer__amp {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-size: 24px;
-    color: var(--ink-muted);
+    display: inline-block;
+    font-family: var(--font-engraved);
+    font-size: 22px;
+    color: var(--accent-gold-deep);
     margin: 10px 0;
+    letter-spacing: 0.05em;
+  }
+  .footer__sprig {
+    width: 80px;
+    height: 24px;
+    margin: 32px auto 12px;
+    color: var(--accent-gold);
+    display: block;
   }
   .footer__cursive {
     font-family: var(--font-script);
-    font-size: 52px;
+    font-size: 56px;
     color: var(--accent-gold-deep);
-    margin: 36px 0 0;
+    margin: 12px 0 0;
   }
   @media (min-width: 768px) {
-    .footer__couple-name { font-size: 72px; }
-    .footer__cursive { font-size: 64px; }
+    .footer__couple-name { font-size: 80px; }
+    .footer__cursive { font-size: 68px; }
   }
 </style>

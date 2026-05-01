@@ -5,18 +5,33 @@ import { wedding } from '../data/wedding'
 <section class="dresscode section" id="dresscode">
   <div class="container">
     <h2 class="section-title">Дресс-код</h2>
-    <div class="divider"><span>❀</span></div>
+    <div class="divider">
+      <svg viewBox="0 0 60 12" width="56" height="12" aria-hidden="true">
+        <g stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round">
+          <path d="M30 1 L30 11"/>
+          <path d="M30 4 C 24 2 18 2 12 5"/>
+          <path d="M30 4 C 36 2 42 2 48 5"/>
+        </g>
+        <ellipse cx="14" cy="5.5" rx="3" ry="1" transform="rotate(-30 14 5.5)" fill="currentColor"/>
+        <ellipse cx="46" cy="5.5" rx="3" ry="1" transform="rotate(30 46 5.5)" fill="currentColor"/>
+        <circle cx="30" cy="11" r="1.2" fill="currentColor"/>
+      </svg>
+    </div>
 
     <p class="dresscode__intro">{wedding.dressCode.intro}</p>
 
     <ul class="palette">
-      {wedding.dressCode.palette.map((c) => (
-        <li class="palette__item">
-          <div class="palette__swatch" style={`background:${c.hex}`}></div>
-          <div class="palette__name">{c.name}</div>
-          <div class="palette__pantone">PANTONE {c.pantone}</div>
-        </li>
-      ))}
+      {wedding.dressCode.palette.map((c, i) => {
+        const roman = ['I', 'II', 'III', 'IV', 'V'][i] ?? `${i + 1}`
+        return (
+          <li class="palette__item">
+            <span class="palette__roman" aria-hidden="true">{roman}</span>
+            <div class="palette__swatch" style={`background:${c.hex}`}></div>
+            <div class="palette__name">{c.name}</div>
+            <div class="palette__pantone">PANTONE {c.pantone}</div>
+          </li>
+        )
+      })}
     </ul>
 
     <p class="dresscode__note">{wedding.dressCode.note}</p>
@@ -30,7 +45,7 @@ import { wedding } from '../data/wedding'
     font-style: italic;
     font-size: 19px;
     color: var(--ink-secondary);
-    margin: 0 auto 36px;
+    margin: 0 auto 40px;
     max-width: 380px;
     line-height: 1.55;
   }
@@ -41,35 +56,51 @@ import { wedding } from '../data/wedding'
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 24px 12px;
+    gap: 28px 12px;
   }
   .palette__item {
     flex: 0 0 calc(33% - 12px);
     max-width: 110px;
+    text-align: center;
+  }
+  .palette__roman {
+    display: block;
+    font-family: var(--font-engraved);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--accent-gold);
+    letter-spacing: 0.18em;
+    margin-bottom: 8px;
   }
   .palette__swatch {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    margin: 0 auto 10px;
-    box-shadow: var(--shadow-soft);
-    border: 1px solid rgba(58, 53, 48, 0.05);
-    transition: transform 200ms ease-out;
+    margin: 0 auto 12px;
+    box-shadow: var(--shadow-soft), inset 0 0 0 2px rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--line-strong);
+    transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out);
   }
-  .palette__item:hover .palette__swatch {
-    transform: scale(1.08);
+  @media (hover: hover) and (pointer: fine) {
+    .palette__item:hover .palette__swatch {
+      transform: scale(1.08);
+      box-shadow: var(--shadow-card), inset 0 0 0 2px rgba(255, 255, 255, 0.8);
+    }
   }
   .palette__name {
     font-family: var(--font-serif);
-    font-size: 16px;
+    font-style: italic;
+    font-size: 15px;
     color: var(--ink-primary);
     margin-bottom: 3px;
+    line-height: 1.3;
   }
   .palette__pantone {
-    font-family: var(--font-sans);
-    font-size: 11px;
+    font-family: var(--font-engraved);
+    font-size: 9px;
+    font-weight: 500;
     color: var(--ink-muted);
-    letter-spacing: 0.05em;
+    letter-spacing: 0.18em;
   }
   .dresscode__note {
     font-family: var(--font-serif);

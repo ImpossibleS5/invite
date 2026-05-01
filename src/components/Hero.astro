@@ -1,6 +1,7 @@
 ---
 import { wedding } from '../data/wedding'
 const base = import.meta.env.BASE_URL
+const initials = `${wedding.couple.bride[0]} & ${wedding.couple.groom[0]}`
 ---
 
 <section class="hero" id="hero">
@@ -10,10 +11,14 @@ const base = import.meta.env.BASE_URL
 
   <div class="hero__overlay" aria-hidden="true"></div>
 
+  <div class="hero__monogram" aria-hidden="true">{initials}</div>
+
   <div class="hero__inner">
-    <p class="hero__eyebrow">Wedding day</p>
+    <p class="hero__eyebrow">— Wedding day —</p>
 
     <h1 class="hero__couple">{wedding.couple.displayName}</h1>
+
+    <div class="hero__rule" aria-hidden="true"></div>
 
     <p class="hero__lead">
       С радостью приглашаем Вас<br/>на празднование нашей свадьбы
@@ -63,9 +68,26 @@ const base = import.meta.env.BASE_URL
   .hero__overlay {
     position: absolute;
     inset: 0;
-    background:
-      radial-gradient(ellipse at center, rgba(255, 255, 255, 0.75) 0%, rgba(251, 248, 243, 0.55) 45%, rgba(251, 248, 243, 0.0) 80%);
     z-index: 1;
+    background:
+      radial-gradient(ellipse at center, rgba(255, 252, 245, 0.78) 0%, rgba(253, 249, 240, 0.55) 45%, rgba(253, 249, 240, 0.0) 80%);
+  }
+
+  .hero__monogram {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-engraved);
+    font-weight: 600;
+    font-size: 44vmin;
+    color: rgba(162, 142, 95, 0.06);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
   }
 
   .hero__inner {
@@ -79,26 +101,55 @@ const base = import.meta.env.BASE_URL
     align-items: center;
   }
 
+  .hero__inner > * {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(6px);
+    animation: hero-enter 850ms var(--ease-out) forwards;
+  }
+  .hero__inner > *:nth-child(1) { animation-delay: 80ms; }
+  .hero__inner > *:nth-child(2) { animation-delay: 200ms; }
+  .hero__inner > *:nth-child(3) { animation-delay: 320ms; }
+  .hero__inner > *:nth-child(4) { animation-delay: 420ms; }
+  .hero__inner > *:nth-child(5) { animation-delay: 540ms; }
+  .hero__inner > *:nth-child(6) { animation-delay: 680ms; }
+  .hero__inner > *:nth-child(7) { animation-delay: 820ms; }
+
+  @keyframes hero-enter {
+    to { opacity: 1; transform: none; filter: blur(0); }
+  }
+
   .hero__eyebrow {
-    font-family: var(--font-script);
-    font-size: 32px;
+    font-family: var(--font-engraved);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
     color: var(--accent-gold-deep);
-    margin: 0 0 12px;
+    margin: 0 0 18px;
     line-height: 1;
-    letter-spacing: 0.02em;
   }
 
   .hero__couple {
     font-family: var(--font-script);
-    font-size: 64px;
+    font-size: 76px;
     font-weight: 400;
     color: var(--ink-primary);
-    margin: 0 0 22px;
-    line-height: 1.05;
+    margin: 0 0 18px;
+    line-height: 0.95;
+    letter-spacing: 0.005em;
   }
   @media (min-width: 768px) {
-    .hero__eyebrow { font-size: 40px; }
-    .hero__couple { font-size: 88px; }
+    .hero__eyebrow { font-size: 14px; letter-spacing: 0.5em; }
+    .hero__couple  { font-size: 110px; }
+  }
+
+  .hero__rule {
+    width: 56px;
+    height: 1px;
+    background: var(--accent-gold);
+    margin: 8px 0 26px;
+    opacity: 0.7;
   }
 
   .hero__lead {
@@ -132,38 +183,41 @@ const base = import.meta.env.BASE_URL
   }
   .hero__date-weekday {
     grid-area: wd;
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-size: 17px;
-    text-transform: lowercase;
+    font-family: var(--font-engraved);
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
     color: var(--ink-secondary);
   }
   .hero__date-day {
     grid-area: day;
-    font-family: var(--font-serif);
+    font-family: var(--font-engraved);
     font-size: 78px;
-    line-height: 1;
     font-weight: 500;
+    line-height: 1;
     color: var(--accent-gold-deep);
+    letter-spacing: 0;
   }
   .hero__date-month {
     grid-area: mo;
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-size: 17px;
+    font-family: var(--font-engraved);
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
     color: var(--ink-secondary);
   }
   .hero__date-year {
     grid-area: year;
-    font-family: var(--font-serif);
-    font-size: 17px;
+    font-family: var(--font-engraved);
+    font-size: 11px;
+    letter-spacing: 0.32em;
     color: var(--ink-secondary);
   }
   @media (min-width: 768px) {
     .hero__date-day { font-size: 96px; }
     .hero__date-weekday,
     .hero__date-month,
-    .hero__date-year { font-size: 19px; }
+    .hero__date-year { font-size: 12px; }
   }
 
   .hero__venue {
@@ -174,9 +228,11 @@ const base = import.meta.env.BASE_URL
     line-height: 1.55;
   }
   .hero__venue strong {
+    display: inline-block;
     color: var(--ink-primary);
     font-weight: 500;
     font-size: 20px;
+    margin-bottom: 4px;
   }
   @media (min-width: 768px) {
     .hero__venue { font-size: 20px; }

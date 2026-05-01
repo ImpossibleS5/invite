@@ -5,7 +5,18 @@ import { wedding } from '../data/wedding'
 <section class="rsvp section" id="rsvp">
   <div class="container">
     <h2 class="section-title">Подтвердите присутствие</h2>
-    <div class="divider"><span>❀</span></div>
+    <div class="divider">
+      <svg viewBox="0 0 60 12" width="56" height="12" aria-hidden="true">
+        <g stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round">
+          <path d="M30 1 L30 11"/>
+          <path d="M30 4 C 24 2 18 2 12 5"/>
+          <path d="M30 4 C 36 2 42 2 48 5"/>
+        </g>
+        <ellipse cx="14" cy="5.5" rx="3" ry="1" transform="rotate(-30 14 5.5)" fill="currentColor"/>
+        <ellipse cx="46" cy="5.5" rx="3" ry="1" transform="rotate(30 46 5.5)" fill="currentColor"/>
+        <circle cx="30" cy="11" r="1.2" fill="currentColor"/>
+      </svg>
+    </div>
 
     <p class="rsvp__lead">
       Пожалуйста, дайте знать, сможете ли вы быть с нами в этот особенный день
@@ -103,27 +114,29 @@ import { wedding } from '../data/wedding'
     text-align: left;
   }
   .rsvp-form__label {
-    font-family: var(--font-sans);
-    font-size: 14px;
+    font-family: var(--font-engraved);
+    font-size: 11px;
+    font-weight: 500;
     color: var(--ink-secondary);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: -8px;
+    letter-spacing: 0.32em;
+    margin-bottom: -6px;
   }
   .rsvp-form__input {
     background: transparent;
     border: none;
     border-bottom: 1px solid var(--accent-gold);
-    padding: 10px 0;
+    padding: 12px 0;
     font-family: var(--font-serif);
     font-size: 20px;
     color: var(--ink-primary);
-    transition: border-color 150ms;
+    transition: border-color 220ms var(--ease-out);
     width: 100%;
   }
   .rsvp-form__input:focus {
     outline: none;
     border-bottom-color: var(--accent-rose-deep);
+    border-bottom-width: 2px;
   }
   .rsvp-form__radios {
     border: none;
@@ -134,12 +147,13 @@ import { wedding } from '../data/wedding'
     gap: 10px;
   }
   .rsvp-form__radios legend {
-    font-family: var(--font-sans);
-    font-size: 14px;
+    font-family: var(--font-engraved);
+    font-size: 11px;
+    font-weight: 500;
     color: var(--ink-secondary);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 10px;
+    letter-spacing: 0.32em;
+    margin-bottom: 12px;
   }
   .rsvp-form__radio {
     display: flex;

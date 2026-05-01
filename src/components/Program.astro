@@ -1,25 +1,75 @@
 ---
 import { wedding } from '../data/wedding'
+
+const icons = ['bouquet', 'rings', 'glass'] as const
+type Icon = typeof icons[number]
 ---
 
 <section class="program section" id="program">
   <div class="container">
     <h2 class="section-title">Программа дня</h2>
-    <div class="divider"><span>❀</span></div>
+    <div class="divider">
+      <svg viewBox="0 0 60 12" width="56" height="12" aria-hidden="true">
+        <g stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round">
+          <path d="M30 1 L30 11"/>
+          <path d="M30 4 C 24 2 18 2 12 5"/>
+          <path d="M30 4 C 36 2 42 2 48 5"/>
+        </g>
+        <ellipse cx="14" cy="5.5" rx="3" ry="1" transform="rotate(-30 14 5.5)" fill="currentColor"/>
+        <ellipse cx="46" cy="5.5" rx="3" ry="1" transform="rotate(30 46 5.5)" fill="currentColor"/>
+        <circle cx="30" cy="11" r="1.2" fill="currentColor"/>
+      </svg>
+    </div>
 
     <ol class="timeline">
-      {wedding.program.map((item) => (
-        <li class="timeline__item">
-          <div class="timeline__marker">
-            <div class="timeline__dot" aria-hidden="true"></div>
-          </div>
-          <div class="timeline__body">
-            <div class="timeline__time">{item.time}</div>
-            <div class="timeline__title">{item.title}</div>
-            <div class="timeline__place">{item.place}</div>
-          </div>
-        </li>
-      ))}
+      {wedding.program.map((item, i) => {
+        const icon: Icon = (icons[i] ?? 'bouquet') as Icon
+        return (
+          <li class="timeline__item">
+            <div class="timeline__stamp" aria-hidden="true">
+              {icon === 'bouquet' && (
+                <svg viewBox="0 0 40 40">
+                  <g stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round">
+                    <path d="M20 36 L20 22"/>
+                    <path d="M20 24 L13 30"/>
+                    <path d="M20 24 L27 30"/>
+                  </g>
+                  <circle cx="14" cy="14" r="4.5" fill="currentColor" opacity="0.85"/>
+                  <circle cx="22" cy="10" r="5" fill="currentColor"/>
+                  <circle cx="28" cy="16" r="4" fill="currentColor" opacity="0.85"/>
+                  <circle cx="18" cy="18" r="3.5" fill="currentColor" opacity="0.7"/>
+                </svg>
+              )}
+              {icon === 'rings' && (
+                <svg viewBox="0 0 40 40">
+                  <g stroke="currentColor" stroke-width="1.6" fill="none">
+                    <circle cx="15" cy="22" r="9"/>
+                    <circle cx="25" cy="22" r="9"/>
+                  </g>
+                  <circle cx="20" cy="22" r="1.6" fill="currentColor"/>
+                  <path d="M14 8 L16 12 L18 8 Z" fill="currentColor" opacity="0.7"/>
+                  <path d="M22 8 L24 12 L26 8 Z" fill="currentColor" opacity="0.7"/>
+                </svg>
+              )}
+              {icon === 'glass' && (
+                <svg viewBox="0 0 40 40">
+                  <g stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 8 L26 8 L24 22 C 24 24, 22 26, 20 26 C 18 26, 16 24, 16 22 Z"/>
+                    <path d="M20 26 L20 32"/>
+                    <path d="M16 32 L24 32"/>
+                  </g>
+                  <path d="M14 8 L26 8 L25 14 L15 14 Z" fill="currentColor" opacity="0.4"/>
+                </svg>
+              )}
+            </div>
+            <div class="timeline__body">
+              <div class="timeline__time">{item.time}</div>
+              <div class="timeline__title">{item.title}</div>
+              <div class="timeline__place">{item.place}</div>
+            </div>
+          </li>
+        )
+      })}
     </ol>
   </div>
 </section>
@@ -27,7 +77,6 @@ import { wedding } from '../data/wedding'
 <style>
   .program { text-align: left; }
   .program .section-title { text-align: center; }
-  .program .divider { margin-bottom: 32px; }
 
   .timeline {
     list-style: none;
@@ -38,56 +87,65 @@ import { wedding } from '../data/wedding'
   .timeline::before {
     content: '';
     position: absolute;
-    left: 19px;
-    top: 12px;
-    bottom: 12px;
+    left: 27px;
+    top: 32px;
+    bottom: 32px;
     width: 1px;
-    background: var(--accent-gold);
+    background: linear-gradient(180deg, transparent, var(--accent-gold) 10%, var(--accent-gold) 90%, transparent);
     opacity: 0.5;
   }
   .timeline__item {
     display: flex;
-    gap: 20px;
+    gap: 24px;
     padding: 16px 0;
     position: relative;
   }
-  .timeline__marker {
-    flex: 0 0 40px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding-top: 4px;
-  }
-  .timeline__dot {
-    width: 14px;
-    height: 14px;
+  .timeline__stamp {
+    flex: 0 0 56px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
-    background: var(--accent-rose);
-    box-shadow: 0 0 0 4px var(--bg-base), 0 0 0 5px var(--accent-gold);
+    background: var(--bg-paper);
+    border: 1px solid var(--accent-gold);
+    box-shadow: var(--shadow-soft);
+    color: var(--accent-gold-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: 1;
+    transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
   }
+  .timeline__stamp svg { width: 30px; height: 30px; }
+  @media (hover: hover) and (pointer: fine) {
+    .timeline__item:hover .timeline__stamp {
+      transform: scale(1.06);
+      box-shadow: var(--shadow-card);
+    }
+  }
+  .timeline__body { padding-top: 6px; }
   .timeline__time {
-    font-family: var(--font-serif);
-    font-size: 30px;
+    font-family: var(--font-engraved);
+    font-size: 28px;
     font-weight: 500;
     color: var(--accent-gold-deep);
     margin-bottom: 6px;
     line-height: 1;
+    letter-spacing: 0.02em;
   }
   .timeline__title {
-    font-family: var(--font-sans);
-    font-weight: 600;
-    font-size: 16px;
+    font-family: var(--font-engraved);
+    font-weight: 500;
+    font-size: 12px;
     color: var(--ink-primary);
     text-transform: uppercase;
-    letter-spacing: 0.04em;
-    margin-bottom: 4px;
+    letter-spacing: 0.22em;
+    margin-bottom: 6px;
   }
   .timeline__place {
     font-family: var(--font-serif);
     font-style: italic;
     font-size: 17px;
     color: var(--ink-secondary);
-    line-height: 1.4;
+    line-height: 1.5;
   }
 </style>
