@@ -1,0 +1,138 @@
+---
+import { wedding } from '../data/wedding'
+import { buildMonthGrid } from '../scripts/calendar'
+
+const cells = buildMonthGrid(2026, 6) // July 2026
+const targetDay = parseInt(wedding.date.day, 10)
+const weekdaysShort = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
+---
+
+<section class="letter section" id="letter">
+  <div class="container">
+    <h2 class="letter__hello">Дорогие родные<br/>и друзья!</h2>
+
+    <p class="letter__body">
+      Вы получили это приглашение —<br/>
+      а значит мы спешим сообщить вам<br/>
+      важную новость:
+    </p>
+
+    <p class="letter__highlight">Мы женимся!</p>
+
+    <p class="letter__body">
+      Приглашаем вас разделить с нами<br/>
+      радость особенного дня и стать<br/>
+      частью нашей семейной истории.
+    </p>
+
+    <p class="letter__waiting">Ждём Вас:</p>
+    <p class="letter__date">{wedding.date.pretty}</p>
+
+    <div class="calendar">
+      <div class="calendar__header">{wedding.date.month} {wedding.date.year}</div>
+      <div class="calendar__weekdays">
+        {weekdaysShort.map((w) => <div class="calendar__weekday">{w}</div>)}
+      </div>
+      <div class="calendar__grid">
+        {cells.map((c) => (
+          <div class:list={[
+              'calendar__cell',
+              c.day === null && 'calendar__cell--empty',
+              c.day === targetDay && 'calendar__cell--target',
+          ]}>
+            {c.day ?? ''}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .letter { text-align: center; }
+  .letter__hello {
+    font-family: var(--font-script);
+    font-weight: 400;
+    font-size: 40px;
+    color: var(--ink-primary);
+    margin: 0 0 24px;
+    line-height: 1.1;
+  }
+  .letter__body {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ink-secondary);
+    margin: 0 0 24px;
+    line-height: 1.6;
+  }
+  .letter__highlight {
+    font-family: var(--font-script);
+    font-size: 48px;
+    color: var(--accent-rose-deep);
+    margin: 0 0 32px;
+    line-height: 1;
+  }
+  .letter__waiting {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-muted);
+    margin: 24px 0 8px;
+  }
+  .letter__date {
+    font-family: var(--font-serif);
+    font-size: 24px;
+    color: var(--accent-gold-deep);
+    margin: 0 0 24px;
+  }
+  .calendar {
+    background: var(--bg-paper);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-card);
+    padding: 16px;
+    box-shadow: var(--shadow-soft);
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  .calendar__header {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    color: var(--accent-gold-deep);
+    margin-bottom: 12px;
+  }
+  .calendar__weekdays,
+  .calendar__grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+  .calendar__weekday {
+    font-size: 11px;
+    color: var(--ink-muted);
+    padding: 4px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .calendar__cell {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--ink-primary);
+    border-radius: 50%;
+  }
+  .calendar__cell--empty { color: transparent; }
+  .calendar__cell--target {
+    background: var(--accent-rose);
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 0 0 2px var(--accent-gold) inset;
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+  }
+</style>
