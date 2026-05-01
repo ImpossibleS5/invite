@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" fill="none">
+  <rect width="480" height="480" fill="#F5EFE6"/>
+  <g stroke="#B89968" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.7">
+    <path d="M30 30 C 80 60, 130 100, 170 160"/>
+    <path d="M450 30 C 400 60, 350 100, 310 160"/>
+    <path d="M30 450 C 80 420, 130 380, 170 320"/>
+    <path d="M450 450 C 400 420, 350 380, 310 320"/>
+  </g>
+  <g fill="#B8D8C0" opacity="0.7">
+    <ellipse cx="80" cy="80" rx="14" ry="6" transform="rotate(-30 80 80)"/>
+    <ellipse cx="120" cy="130" rx="14" ry="6" transform="rotate(-30 120 130)"/>
+    <ellipse cx="400" cy="80" rx="14" ry="6" transform="rotate(30 400 80)"/>
+    <ellipse cx="360" cy="130" rx="14" ry="6" transform="rotate(30 360 130)"/>
+    <ellipse cx="80" cy="400" rx="14" ry="6" transform="rotate(30 80 400)"/>
+    <ellipse cx="400" cy="400" rx="14" ry="6" transform="rotate(-30 400 400)"/>
+  </g>
+  <g fill="#F0C4C4" opacity="0.85">
+    <circle cx="100" cy="110" r="10"/>
+    <circle cx="380" cy="110" r="10"/>
+    <circle cx="120" cy="380" r="10"/>
+    <circle cx="360" cy="380" r="10"/>
+  </g>
+  <g fill="#B89968" opacity="0.5">
+    <circle cx="240" cy="240" r="2"/>
+  </g>
+  <text x="240" y="260" text-anchor="middle"
+        font-family="Pinyon Script, cursive" font-size="36" fill="#B89968" opacity="0.9">
+    К & Н
+  </text>
+</svg>
