@@ -1,0 +1,66 @@
+---
+import { wedding } from '../data/wedding'
+---
+
+<section class="map section" id="map">
+  <div class="container">
+    <h2 class="section-title">Как добраться?</h2>
+    <div class="divider"><span>❀</span></div>
+
+    <div class="map__embed">
+      <iframe
+        src={wedding.venue.yandexMapEmbed}
+        title={`Карта проезда: ${wedding.venue.name}`}
+        loading="lazy"
+        referrerpolicy="no-referrer"
+        allowfullscreen
+      ></iframe>
+    </div>
+
+    <p class="map__text">
+      Праздничный фуршет состоится в&nbsp;<strong>{wedding.venue.name}</strong>.<br/>
+      {wedding.venue.addressShort}
+    </p>
+
+    <a class="map__cta" href={wedding.venue.yandexMapsUrl} target="_blank" rel="noopener">
+      Построить маршрут в Яндекс.Картах →
+    </a>
+  </div>
+</section>
+
+<style>
+  .map { text-align: center; }
+  .map__embed {
+    aspect-ratio: 16 / 10;
+    margin: 24px 0 24px;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    background: var(--bg-soft);
+  }
+  .map__embed iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .map__text {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-secondary);
+    margin: 0 0 24px;
+  }
+  .map__text strong { color: var(--ink-primary); font-weight: 500; }
+  .map__cta {
+    display: inline-block;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--accent-gold-deep);
+    border: 1px solid var(--accent-gold);
+    border-radius: var(--radius-pill);
+    padding: 10px 22px;
+    transition: background 150ms ease-out;
+  }
+  .map__cta:hover { background: rgba(184, 153, 104, 0.1); }
+</style>
