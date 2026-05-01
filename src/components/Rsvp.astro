@@ -1,0 +1,252 @@
+---
+import { wedding } from '../data/wedding'
+---
+
+<section class="rsvp section" id="rsvp">
+  <div class="container">
+    <h2 class="section-title">Подтвердите присутствие</h2>
+    <div class="divider"><span>❀</span></div>
+
+    <p class="rsvp__lead">
+      Пожалуйста, дайте знать, сможете ли вы быть с нами в этот особенный день
+    </p>
+
+    <div class="rsvp__banner" id="rsvp-banner" hidden></div>
+
+    <form class="rsvp-form" id="rsvp-form" novalidate>
+      <label class="rsvp-form__label" for="rsvp-name">Ваше имя и фамилия</label>
+      <input
+        type="text"
+        id="rsvp-name"
+        name="name"
+        autocomplete="name"
+        class="rsvp-form__input"
+        required
+      />
+
+      <fieldset class="rsvp-form__radios">
+        <legend>Присутствие</legend>
+        <label class="rsvp-form__radio">
+          <input type="radio" name="attendance" value="yes" />
+          <span>{wedding.rsvp.attendanceValues.yes}</span>
+        </label>
+        <label class="rsvp-form__radio">
+          <input type="radio" name="attendance" value="no" />
+          <span>{wedding.rsvp.attendanceValues.no}</span>
+        </label>
+      </fieldset>
+
+      <label class="rsvp-form__label" for="rsvp-captcha" id="rsvp-captcha-label">
+        Загрузка...
+      </label>
+      <input
+        type="text"
+        id="rsvp-captcha"
+        inputmode="numeric"
+        autocomplete="off"
+        class="rsvp-form__input rsvp-form__input--captcha"
+      />
+
+      <input
+        type="text"
+        name="phone_alt"
+        id="rsvp-honeypot"
+        tabindex="-1"
+        autocomplete="off"
+        class="rsvp-form__honeypot"
+        aria-hidden="true"
+      />
+
+      <button type="submit" class="primary rsvp-form__submit" id="rsvp-submit" disabled>
+        Отправить
+      </button>
+    </form>
+  </div>
+</section>
+
+<style>
+  .rsvp { text-align: center; }
+  .rsvp__lead {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-secondary);
+    margin: 0 auto 32px;
+    max-width: 360px;
+  }
+  .rsvp__banner {
+    background: var(--bg-paper);
+    border: 1px solid var(--accent-gold);
+    border-radius: var(--radius-card);
+    padding: 14px 18px;
+    margin: 0 0 20px;
+    color: var(--ink-primary);
+    font-family: var(--font-serif);
+    font-size: 16px;
+    transition: opacity 400ms;
+  }
+  .rsvp__banner[data-kind='error'] {
+    border-color: #C97A7A;
+    color: #8A4848;
+  }
+
+  .rsvp-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: left;
+  }
+  .rsvp-form__label {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--ink-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: -8px;
+  }
+  .rsvp-form__input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--accent-gold);
+    padding: 8px 0;
+    font-family: var(--font-serif);
+    font-size: 18px;
+    color: var(--ink-primary);
+    transition: border-color 150ms;
+    width: 100%;
+  }
+  .rsvp-form__input:focus {
+    outline: none;
+    border-bottom-color: var(--accent-rose-deep);
+  }
+  .rsvp-form__radios {
+    border: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .rsvp-form__radios legend {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--ink-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+  .rsvp-form__radio {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-serif);
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .rsvp-form__radio input[type='radio'] {
+    accent-color: var(--accent-rose-deep);
+    width: 18px;
+    height: 18px;
+  }
+  .rsvp-form__honeypot {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .rsvp-form__submit {
+    margin-top: 12px;
+    align-self: stretch;
+  }
+</style>
+
+<script>
+  import { wedding } from '../data/wedding'
+  import { makeCaptcha, isFormReady, isCaptchaCorrect } from '../scripts/rsvp'
+
+  const form = document.getElementById('rsvp-form') as HTMLFormElement
+  const submit = document.getElementById('rsvp-submit') as HTMLButtonElement
+  const nameInput = document.getElementById('rsvp-name') as HTMLInputElement
+  const captchaInput = document.getElementById('rsvp-captcha') as HTMLInputElement
+  const captchaLabel = document.getElementById('rsvp-captcha-label')!
+  const honeypot = document.getElementById('rsvp-honeypot') as HTMLInputElement
+  const banner = document.getElementById('rsvp-banner')!
+  const radios = form.querySelectorAll<HTMLInputElement>('input[name="attendance"]')
+
+  let challenge = makeCaptcha()
+  captchaLabel.textContent = challenge.question
+
+  const validate = () => {
+    const checked = [...radios].find((r) => r.checked)
+    submit.disabled = !isFormReady(nameInput.value, checked?.value ?? null)
+  }
+
+  nameInput.addEventListener('input', validate)
+  radios.forEach((r) => r.addEventListener('change', validate))
+
+  function showBanner(text: string, kind: 'success' | 'error' = 'success') {
+    banner.textContent = text
+    banner.dataset.kind = kind
+    banner.hidden = false
+    if (kind === 'success') {
+      window.setTimeout(() => {
+        banner.hidden = true
+      }, 5000)
+    }
+  }
+
+  function refreshCaptcha() {
+    challenge = makeCaptcha()
+    captchaLabel.textContent = challenge.question
+    captchaInput.value = ''
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    if (honeypot.value.trim() !== '') {
+      // bot — fake success, do nothing
+      showBanner(wedding.rsvp.successMessage)
+      form.reset()
+      refreshCaptcha()
+      validate()
+      return
+    }
+    if (!isCaptchaCorrect(captchaInput.value, challenge.answer)) {
+      showBanner('Неверный ответ на капчу. Попробуйте ещё раз.', 'error')
+      refreshCaptcha()
+      return
+    }
+    const attendance = [...radios].find((r) => r.checked)?.value
+    if (!attendance) return
+
+    submit.disabled = true
+    try {
+      const body = new URLSearchParams()
+      body.append(wedding.rsvp.fields.name, nameInput.value.trim())
+      body.append(
+        wedding.rsvp.fields.attendance,
+        attendance === 'yes'
+          ? wedding.rsvp.attendanceValues.yes
+          : wedding.rsvp.attendanceValues.no
+      )
+
+      await fetch(wedding.rsvp.formActionUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        body,
+      })
+
+      const msg =
+        attendance === 'yes' ? wedding.rsvp.successMessage : wedding.rsvp.declineMessage
+      showBanner(msg)
+      form.reset()
+      refreshCaptcha()
+      validate()
+    } catch {
+      showBanner(wedding.rsvp.errorMessage, 'error')
+      validate()
+    }
+  })
+
+  validate()
+</script>
