@@ -1,0 +1,130 @@
+---
+import { wedding } from '../data/wedding'
+---
+
+<section class="countdown section" id="countdown">
+  <div class="container">
+    <p class="countdown__quote">«{wedding.quote}»</p>
+    <p class="countdown__date">{wedding.date.pretty}</p>
+
+    <p class="countdown__lead" id="countdown-lead">До свадьбы осталось:</p>
+
+    <div class="countdown__grid" id="countdown-grid">
+      <div class="countdown__cell"><span class="countdown__num" data-unit="days">—</span><span class="countdown__label" data-unit-label="days">дней</span></div>
+      <div class="countdown__cell"><span class="countdown__num" data-unit="hours">—</span><span class="countdown__label" data-unit-label="hours">часов</span></div>
+      <div class="countdown__cell"><span class="countdown__num" data-unit="minutes">—</span><span class="countdown__label" data-unit-label="minutes">минут</span></div>
+      <div class="countdown__cell"><span class="countdown__num" data-unit="seconds">—</span><span class="countdown__label" data-unit-label="seconds">секунд</span></div>
+    </div>
+
+    <p class="countdown__celebrate" id="countdown-celebrate" hidden>Сегодня! 🌿</p>
+  </div>
+</section>
+
+<style>
+  .countdown { text-align: center; }
+  .countdown__quote {
+    font-family: var(--font-script);
+    font-size: 36px;
+    color: var(--accent-rose-deep);
+    margin: 0 0 8px;
+    line-height: 1;
+  }
+  .countdown__date {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 20px;
+    color: var(--ink-secondary);
+    margin: 0 0 32px;
+  }
+  .countdown__lead {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-muted);
+    margin: 0 0 16px;
+  }
+  .countdown__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .countdown__cell {
+    background: var(--bg-paper);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-card);
+    padding: 16px 4px;
+    box-shadow: var(--shadow-soft);
+  }
+  .countdown__num {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--accent-gold-deep);
+    line-height: 1;
+    transition: opacity 200ms;
+  }
+  .countdown__label {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 6px;
+  }
+  .countdown__celebrate {
+    font-family: var(--font-script);
+    font-size: 56px;
+    color: var(--accent-rose-deep);
+    margin: 24px 0 0;
+  }
+</style>
+
+<script>
+  import { wedding } from '../data/wedding'
+  import { calcRemaining, pluralizeRu } from '../scripts/countdown'
+
+  const grid = document.getElementById('countdown-grid')!
+  const lead = document.getElementById('countdown-lead')!
+  const celebrate = document.getElementById('countdown-celebrate')!
+
+  const labels = {
+    days: ['день', 'дня', 'дней'] as [string, string, string],
+    hours: ['час', 'часа', 'часов'] as [string, string, string],
+    minutes: ['минута', 'минуты', 'минут'] as [string, string, string],
+    seconds: ['секунда', 'секунды', 'секунд'] as [string, string, string],
+  }
+
+  function tick() {
+    const r = calcRemaining(wedding.date.iso)
+    if (r.isPast) {
+      grid.hidden = true
+      lead.hidden = true
+      celebrate.hidden = false
+      return
+    }
+    setNum('days', r.days)
+    setNum('hours', r.hours)
+    setNum('minutes', r.minutes)
+    setNum('seconds', r.seconds)
+    setLabel('days', pluralizeRu(r.days, labels.days))
+    setLabel('hours', pluralizeRu(r.hours, labels.hours))
+    setLabel('minutes', pluralizeRu(r.minutes, labels.minutes))
+    setLabel('seconds', pluralizeRu(r.seconds, labels.seconds))
+  }
+
+  function setNum(unit: string, value: number) {
+    const el = document.querySelector(`[data-unit="${unit}"]`)
+    if (el) el.textContent = String(value)
+  }
+  function setLabel(unit: string, value: string) {
+    const el = document.querySelector(`[data-unit-label="${unit}"]`)
+    if (el) el.textContent = value
+  }
+
+  tick()
+  setInterval(tick, 1000)
+</script>
