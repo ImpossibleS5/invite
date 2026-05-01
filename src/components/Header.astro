@@ -185,6 +185,7 @@ const menu = [
       backdrop.setAttribute('aria-hidden', String(!open))
     }
     document.body.style.overflow = open ? 'hidden' : ''
+    document.body.classList.toggle('menu-open', open)
   }
 
   burger?.addEventListener('click', () => setOpen(true))

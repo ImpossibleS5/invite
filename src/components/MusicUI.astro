@@ -35,6 +35,16 @@ const audioSrc = wedding.music.src
   .music-toast {
     position: fixed;
     z-index: 100;
+    transition: opacity 220ms var(--ease-out), transform 220ms var(--ease-out);
+  }
+
+  /* Hide music UI when the navigation drawer is open */
+  :global(body.menu-open) .music-prompt,
+  :global(body.menu-open) .music-toggle,
+  :global(body.menu-open) .music-toast {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(8px);
   }
   .music-prompt {
     right: 16px;
