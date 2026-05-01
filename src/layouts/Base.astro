@@ -1,0 +1,47 @@
+---
+import '../styles/global.css'
+import { wedding } from '../data/wedding'
+
+interface Props {
+  title?: string
+  description?: string
+}
+
+const {
+  title = `${wedding.couple.displayName} — Приглашение на свадьбу`,
+  description = `Приглашаем вас на нашу свадьбу ${wedding.date.pretty}. ${wedding.venue.name}, ${wedding.venue.addressShort}.`,
+} = Astro.props
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="theme-color" content="#FBF8F3" />
+    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible')
+              observer.unobserve(entry.target)
+            }
+          }
+        },
+        { threshold: 0.15 }
+      )
+      document.querySelectorAll('.section').forEach((s) => observer.observe(s))
+    </script>
+  </body>
+</html>
