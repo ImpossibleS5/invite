@@ -5,3 +5,6 @@ dist/
 .env.local
 .DS_Store
 *.log
+
+# Astro auto-generated
+src/env.d.ts
