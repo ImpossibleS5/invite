@@ -12,15 +12,12 @@ const menu = [
   <div class="header__inner">
     <a class="header__brand" href="#hero">ПРИГЛАШЕНИЕ</a>
 
-    <button class="header__music" id="music-toggle-header" aria-label="Включить музыку">
-      <span class="header__music-icon" aria-hidden="true">♪</span>
-      <span class="header__music-label">Музыка</span>
-    </button>
-
     <button class="header__burger" id="header-burger" aria-label="Открыть меню" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
+
+  <button class="menu__backdrop" id="menu-backdrop" aria-hidden="true" tabindex="-1"></button>
 
   <nav class="menu" id="menu" aria-hidden="true">
     <button class="menu__close" id="menu-close" aria-label="Закрыть меню">×</button>
@@ -42,12 +39,10 @@ const menu = [
     border-bottom: 1px solid var(--line-soft);
   }
   .header__inner {
-    max-width: var(--container-w);
-    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 20px;
+    padding: 14px 20px;
   }
   .header__brand {
     font-family: var(--font-serif);
@@ -56,18 +51,6 @@ const menu = [
     color: var(--ink-primary);
     border-bottom: none;
   }
-  .header__music {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--bg-paper);
-    border: 1px solid var(--line-soft);
-    border-radius: var(--radius-pill);
-    padding: 6px 14px;
-    color: var(--accent-gold-deep);
-    font-size: 13px;
-  }
-  .header__music-icon { font-size: 14px; }
   .header__burger {
     background: transparent;
     border: none;
@@ -85,7 +68,28 @@ const menu = [
     height: 1.5px;
     background: var(--ink-primary);
     margin: 0 auto;
+    transition: transform 200ms ease-out, opacity 200ms ease-out;
   }
+
+  /* Backdrop: fades in behind menu when open */
+  .menu__backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(58, 53, 48, 0.35);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 250ms ease-out;
+    z-index: 55;
+  }
+  .menu__backdrop[data-open='true'] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Mobile: full-screen sheet sliding from top */
   .menu {
     position: fixed;
     inset: 0;
@@ -99,6 +103,21 @@ const menu = [
     padding: 0 20px;
   }
   .menu[data-open='true'] { transform: none; }
+
+  /* Desktop: side panel sliding from right */
+  @media (min-width: 768px) {
+    .menu {
+      inset: 0 0 0 auto;
+      width: 360px;
+      background: var(--bg-paper);
+      transform: translateX(100%);
+      box-shadow: -8px 0 40px rgba(58, 53, 48, 0.18);
+      justify-content: flex-start;
+      align-items: flex-start;
+      padding: 80px 40px 40px;
+    }
+  }
+
   .menu__close {
     position: absolute;
     top: 16px;
@@ -108,12 +127,16 @@ const menu = [
     font-size: 32px;
     color: var(--ink-primary);
     line-height: 1;
+    cursor: pointer;
   }
   .menu ul {
     list-style: none;
     padding: 0;
     margin: 0;
     text-align: center;
+  }
+  @media (min-width: 768px) {
+    .menu ul { text-align: left; width: 100%; }
   }
   .menu__link {
     display: block;
@@ -122,25 +145,36 @@ const menu = [
     font-size: 24px;
     color: var(--ink-primary);
     border-bottom: none;
+    transition: color 150ms ease-out;
   }
+  .menu__link:hover { color: var(--accent-gold-deep); }
 </style>
 
 <script>
   const burger = document.getElementById('header-burger')
   const menu = document.getElementById('menu')
   const close = document.getElementById('menu-close')
+  const backdrop = document.getElementById('menu-backdrop')
 
   function setOpen(open: boolean) {
     if (!menu || !burger) return
     menu.dataset.open = String(open)
     menu.setAttribute('aria-hidden', String(!open))
     burger.setAttribute('aria-expanded', String(open))
+    if (backdrop) {
+      backdrop.dataset.open = String(open)
+      backdrop.setAttribute('aria-hidden', String(!open))
+    }
     document.body.style.overflow = open ? 'hidden' : ''
   }
 
   burger?.addEventListener('click', () => setOpen(true))
   close?.addEventListener('click', () => setOpen(false))
+  backdrop?.addEventListener('click', () => setOpen(false))
   menu?.querySelectorAll('a').forEach((a) =>
     a.addEventListener('click', () => setOpen(false))
   )
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu?.dataset.open === 'true') setOpen(false)
+  })
 </script>

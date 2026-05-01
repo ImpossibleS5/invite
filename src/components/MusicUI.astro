@@ -35,59 +35,83 @@ const audioSrc = wedding.music.src
     z-index: 100;
   }
   .music-prompt {
-    right: 16px;
-    bottom: 16px;
+    right: 20px;
+    bottom: 20px;
     background: var(--bg-paper);
     border: 1px solid var(--line-soft);
     border-radius: var(--radius-card);
-    padding: 14px 16px;
+    padding: 24px 28px 22px;
     box-shadow: var(--shadow-card);
-    max-width: 280px;
+    max-width: 360px;
+    width: calc(100vw - 40px);
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 14px;
     align-items: center;
     text-align: center;
+    animation: music-prompt-in 320ms ease-out;
   }
-  .music-prompt__icon { font-size: 20px; color: var(--accent-gold-deep); }
+  @keyframes music-prompt-in {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .music-prompt__icon {
+    font-size: 28px;
+    color: var(--accent-gold-deep);
+    line-height: 1;
+  }
   .music-prompt__text {
     font-family: var(--font-serif);
     font-style: italic;
-    font-size: 14px;
-    color: var(--ink-secondary);
+    font-size: 18px;
+    color: var(--ink-primary);
+    line-height: 1.4;
+    margin: 0;
   }
-  .music-prompt__actions { display: flex; gap: 8px; }
+  .music-prompt__actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+  }
   .music-prompt__yes,
   .music-prompt__no {
-    font-family: var(--font-sans);
-    font-size: 13px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 16px;
     border-radius: var(--radius-pill);
-    padding: 6px 14px;
+    padding: 9px 22px;
     border: 1px solid var(--accent-gold);
     background: transparent;
     color: var(--accent-gold-deep);
+    cursor: pointer;
+    transition: background 150ms ease-out, color 150ms ease-out;
   }
   .music-prompt__yes {
     background: var(--accent-rose);
     color: #fff;
     border-color: var(--accent-rose);
   }
+  .music-prompt__yes:hover { background: var(--accent-rose-deep); border-color: var(--accent-rose-deep); }
+  .music-prompt__no:hover { background: rgba(184, 153, 104, 0.1); }
 
   .music-toggle {
-    right: 16px;
-    bottom: 16px;
-    width: 44px;
-    height: 44px;
+    right: 20px;
+    bottom: 20px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     background: var(--bg-paper);
     border: 1px solid var(--line-soft);
     box-shadow: var(--shadow-soft);
     color: var(--accent-gold-deep);
-    font-size: 18px;
+    font-size: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    transition: background 150ms ease-out, color 150ms ease-out, transform 150ms ease-out;
   }
+  .music-toggle:hover { transform: scale(1.06); }
   .music-toggle[data-on='true'] {
     background: var(--accent-rose);
     color: #fff;
@@ -117,7 +141,6 @@ const audioSrc = wedding.music.src
   const toggle = document.getElementById('music-toggle') as HTMLButtonElement
   const toggleIcon = document.getElementById('music-toggle-icon')!
   const toast = document.getElementById('music-toast')!
-  const headerBtn = document.getElementById('music-toggle-header')
 
   const STORAGE_KEY = 'music_pref'
   type Pref = 'on' | 'off' | 'asked-no'
@@ -128,7 +151,6 @@ const audioSrc = wedding.music.src
     toggle.dataset.on = String(on)
     toggleIcon.textContent = on ? '⏸' : '♪'
     toggle.setAttribute('aria-label', on ? 'Выключить музыку' : 'Включить музыку')
-    headerBtn?.setAttribute('aria-label', on ? 'Выключить музыку' : 'Включить музыку')
     toggle.hidden = false
   }
 
@@ -178,8 +200,6 @@ const audioSrc = wedding.music.src
       setToggleState(false)
     }
   })
-
-  headerBtn?.addEventListener('click', () => toggle.click())
 
   const pref = localStorage.getItem(STORAGE_KEY) as Pref | null
   if (pref === 'on') {

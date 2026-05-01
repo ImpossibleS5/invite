@@ -3,14 +3,15 @@ import { wedding } from '../data/wedding'
 const base = import.meta.env.BASE_URL
 ---
 
-<section class="hero section" id="hero">
-  <div class="container">
-    <img class="hero__corner hero__corner--tl" src={`${base}decor/branch-corner.svg`} alt="" />
-    <img class="hero__corner hero__corner--br" src={`${base}decor/branch-corner.svg`} alt="" />
+<section class="hero" id="hero">
+  <div class="hero__bg" aria-hidden="true">
+    <img src={`${base}decor/hero-bg.svg`} alt="" />
+  </div>
 
-    <div class="hero__photo">
-      <img src={`${base}decor/hero-frame.svg`} alt="" />
-    </div>
+  <div class="hero__overlay" aria-hidden="true"></div>
+
+  <div class="hero__inner">
+    <p class="hero__eyebrow">Wedding day</p>
 
     <h1 class="hero__couple">{wedding.couple.displayName}</h1>
 
@@ -37,47 +38,80 @@ const base = import.meta.env.BASE_URL
 <style>
   .hero {
     position: relative;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-  }
-  .hero__corner {
-    position: absolute;
-    width: 120px;
-    height: 120px;
-    pointer-events: none;
-  }
-  .hero__corner--tl { top: 0; left: 0; }
-  .hero__corner--br { bottom: 0; right: 0; transform: rotate(180deg); }
-
-  .hero__photo {
-    margin: 0 auto 32px;
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    max-width: 400px;
-    border-radius: var(--radius-card);
     overflow: hidden;
-    box-shadow: var(--shadow-card);
+    padding: 80px 24px 60px;
   }
-  .hero__photo img { width: 100%; height: 100%; object-fit: cover; }
+
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .hero__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at center, rgba(255, 255, 255, 0.75) 0%, rgba(251, 248, 243, 0.55) 45%, rgba(251, 248, 243, 0.0) 80%);
+    z-index: 1;
+  }
+
+  .hero__inner {
+    position: relative;
+    z-index: 2;
+    max-width: 520px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero__eyebrow {
+    font-family: var(--font-script);
+    font-size: 32px;
+    color: var(--accent-gold-deep);
+    margin: 0 0 12px;
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
 
   .hero__couple {
     font-family: var(--font-script);
-    font-size: 48px;
+    font-size: 64px;
     font-weight: 400;
     color: var(--ink-primary);
-    margin: 0 0 16px;
-    line-height: 1.1;
+    margin: 0 0 22px;
+    line-height: 1.05;
   }
   @media (min-width: 768px) {
-    .hero__couple { font-size: 64px; }
+    .hero__eyebrow { font-size: 40px; }
+    .hero__couple { font-size: 88px; }
   }
 
   .hero__lead {
     font-family: var(--font-serif);
     font-style: italic;
-    font-size: 18px;
+    font-size: 22px;
     color: var(--ink-secondary);
-    margin: 0 auto 32px;
-    max-width: 360px;
+    margin: 0 auto 36px;
+    max-width: 380px;
+    line-height: 1.5;
+  }
+  @media (min-width: 768px) {
+    .hero__lead { font-size: 24px; }
   }
 
   .hero__date {
@@ -86,12 +120,12 @@ const base = import.meta.env.BASE_URL
     grid-template-areas:
       'wd day mo'
       'wd day year';
-    gap: 0 16px;
+    gap: 0 18px;
     align-items: center;
     justify-content: center;
     width: max-content;
-    margin: 0 auto 24px;
-    padding: 16px 24px;
+    margin: 0 auto 28px;
+    padding: 18px 28px;
     border-top: 1px solid var(--accent-gold);
     border-bottom: 1px solid var(--accent-gold);
     color: var(--ink-primary);
@@ -100,14 +134,14 @@ const base = import.meta.env.BASE_URL
     grid-area: wd;
     font-family: var(--font-serif);
     font-style: italic;
-    font-size: 14px;
+    font-size: 17px;
     text-transform: lowercase;
     color: var(--ink-secondary);
   }
   .hero__date-day {
     grid-area: day;
     font-family: var(--font-serif);
-    font-size: 56px;
+    font-size: 78px;
     line-height: 1;
     font-weight: 500;
     color: var(--accent-gold-deep);
@@ -116,32 +150,43 @@ const base = import.meta.env.BASE_URL
     grid-area: mo;
     font-family: var(--font-serif);
     font-style: italic;
-    font-size: 14px;
+    font-size: 17px;
     color: var(--ink-secondary);
   }
   .hero__date-year {
     grid-area: year;
     font-family: var(--font-serif);
-    font-size: 14px;
+    font-size: 17px;
     color: var(--ink-secondary);
+  }
+  @media (min-width: 768px) {
+    .hero__date-day { font-size: 96px; }
+    .hero__date-weekday,
+    .hero__date-month,
+    .hero__date-year { font-size: 19px; }
   }
 
   .hero__venue {
     font-family: var(--font-serif);
-    font-size: 16px;
+    font-size: 18px;
     color: var(--ink-secondary);
-    margin: 0 0 32px;
-    line-height: 1.5;
+    margin: 0 0 36px;
+    line-height: 1.55;
   }
   .hero__venue strong {
     color: var(--ink-primary);
     font-weight: 500;
+    font-size: 20px;
+  }
+  @media (min-width: 768px) {
+    .hero__venue { font-size: 20px; }
+    .hero__venue strong { font-size: 22px; }
   }
 
   .hero__hint {
     font-family: var(--font-serif);
     font-style: italic;
-    font-size: 14px;
+    font-size: 16px;
     color: var(--ink-muted);
     margin: 0;
   }

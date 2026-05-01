@@ -53,53 +53,59 @@ const weekdaysShort = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
   .letter__hello {
     font-family: var(--font-script);
     font-weight: 400;
-    font-size: 40px;
+    font-size: 52px;
     color: var(--ink-primary);
-    margin: 0 0 24px;
-    line-height: 1.1;
+    margin: 0 0 28px;
+    line-height: 1.05;
+  }
+  @media (min-width: 768px) {
+    .letter__hello { font-size: 64px; }
   }
   .letter__body {
     font-family: var(--font-serif);
     font-style: italic;
-    font-size: 17px;
+    font-size: 20px;
     color: var(--ink-secondary);
-    margin: 0 0 24px;
+    margin: 0 0 28px;
     line-height: 1.6;
   }
   .letter__highlight {
     font-family: var(--font-script);
-    font-size: 48px;
+    font-size: 64px;
     color: var(--accent-rose-deep);
-    margin: 0 0 32px;
+    margin: 0 0 36px;
     line-height: 1;
+  }
+  @media (min-width: 768px) {
+    .letter__highlight { font-size: 80px; }
   }
   .letter__waiting {
     font-family: var(--font-serif);
     font-style: italic;
-    font-size: 16px;
+    font-size: 18px;
     color: var(--ink-muted);
-    margin: 24px 0 8px;
+    margin: 28px 0 8px;
   }
   .letter__date {
     font-family: var(--font-serif);
-    font-size: 24px;
+    font-size: 28px;
     color: var(--accent-gold-deep);
-    margin: 0 0 24px;
+    margin: 0 0 28px;
   }
   .calendar {
     background: var(--bg-paper);
     border: 1px solid var(--line-soft);
     border-radius: var(--radius-card);
-    padding: 16px;
+    padding: 18px;
     box-shadow: var(--shadow-soft);
-    max-width: 320px;
+    max-width: 360px;
     margin: 0 auto;
   }
   .calendar__header {
     font-family: var(--font-serif);
-    font-size: 18px;
+    font-size: 22px;
     color: var(--accent-gold-deep);
-    margin-bottom: 12px;
+    margin-bottom: 14px;
   }
   .calendar__weekdays,
   .calendar__grid {
@@ -108,7 +114,7 @@ const weekdaysShort = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
     gap: 4px;
   }
   .calendar__weekday {
-    font-size: 11px;
+    font-size: 12px;
     color: var(--ink-muted);
     padding: 4px 0;
     text-transform: uppercase;
@@ -119,7 +125,7 @@ const weekdaysShort = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
+    font-size: 16px;
     color: var(--ink-primary);
     border-radius: 50%;
   }
