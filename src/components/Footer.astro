@@ -1,0 +1,62 @@
+---
+import { wedding } from '../data/wedding'
+const base = import.meta.env.BASE_URL
+---
+
+<footer class="footer section">
+  <div class="container">
+    <img class="footer__corner footer__corner--tl" src={`${base}decor/branch-corner.svg`} alt="" />
+    <img class="footer__corner footer__corner--br" src={`${base}decor/branch-corner.svg`} alt="" />
+
+    <p class="footer__lead">Будем рады видеть вас<br/>на нашем празднике!</p>
+    <p class="footer__couple-name">{wedding.couple.bride}</p>
+    <p class="footer__amp">и</p>
+    <p class="footer__couple-name">{wedding.couple.groom}</p>
+    <p class="footer__cursive">See you soon</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    text-align: center;
+    position: relative;
+    background: var(--bg-soft);
+    margin-top: 0;
+  }
+  .footer__corner {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    pointer-events: none;
+    opacity: 0.7;
+  }
+  .footer__corner--tl { top: 12px; left: 12px; }
+  .footer__corner--br { bottom: 12px; right: 12px; transform: rotate(180deg); }
+  .footer__lead {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-secondary);
+    margin: 0 0 32px;
+  }
+  .footer__couple-name {
+    font-family: var(--font-script);
+    font-size: 40px;
+    color: var(--ink-primary);
+    margin: 0;
+    line-height: 1;
+  }
+  .footer__amp {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 20px;
+    color: var(--ink-muted);
+    margin: 8px 0;
+  }
+  .footer__cursive {
+    font-family: var(--font-script);
+    font-size: 36px;
+    color: var(--accent-gold-deep);
+    margin: 32px 0 0;
+  }
+</style>
