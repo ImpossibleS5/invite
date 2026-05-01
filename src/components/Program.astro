@@ -1,0 +1,90 @@
+---
+import { wedding } from '../data/wedding'
+---
+
+<section class="program section" id="program">
+  <div class="container">
+    <h2 class="section-title">Программа дня</h2>
+    <div class="divider"><span>❀</span></div>
+
+    <ol class="timeline">
+      {wedding.program.map((item) => (
+        <li class="timeline__item">
+          <div class="timeline__marker">
+            <div class="timeline__dot" aria-hidden="true"></div>
+          </div>
+          <div class="timeline__body">
+            <div class="timeline__time">{item.time}</div>
+            <div class="timeline__title">{item.title}</div>
+            <div class="timeline__place">{item.place}</div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .program { text-align: left; }
+  .program .section-title { text-align: center; }
+  .program .divider { margin-bottom: 32px; }
+
+  .timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 12px;
+    bottom: 12px;
+    width: 1px;
+    background: var(--accent-gold);
+    opacity: 0.5;
+  }
+  .timeline__item {
+    display: flex;
+    gap: 20px;
+    padding: 16px 0;
+    position: relative;
+  }
+  .timeline__marker {
+    flex: 0 0 40px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 4px;
+  }
+  .timeline__dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent-rose);
+    box-shadow: 0 0 0 4px var(--bg-base), 0 0 0 5px var(--accent-gold);
+    z-index: 1;
+  }
+  .timeline__time {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    color: var(--accent-gold-deep);
+    margin-bottom: 4px;
+  }
+  .timeline__title {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--ink-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+  }
+  .timeline__place {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-secondary);
+  }
+</style>
