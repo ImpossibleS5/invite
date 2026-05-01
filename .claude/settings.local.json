@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:06-06-26.xn--p1ai)",
+      "WebSearch",
+      "Bash(gh --version)",
+      "Bash(gh auth *)",
+      "Bash(npm --version)",
+      "Bash(git --version)",
+      "Bash(git -C \"C:/Users/User/projects/invite\" rev-parse --is-inside-work-tree)",
+      "Bash(npm init *)",
+      "Bash(npm install *)",
+      "Bash(git init *)",
+      "Bash(git branch *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}
