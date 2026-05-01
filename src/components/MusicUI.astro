@@ -173,9 +173,6 @@ const audioSrc = wedding.music.src
   const toggleIcon = document.getElementById('music-toggle-icon')!
   const toast = document.getElementById('music-toast')!
 
-  const STORAGE_KEY = 'music_pref'
-  type Pref = 'on' | 'off' | 'asked-no'
-
   audio.volume = 0.4
 
   function setToggleState(on: boolean) {
@@ -213,13 +210,11 @@ const audioSrc = wedding.music.src
     prompt.hidden = true
     const ok = await tryPlay()
     setToggleState(ok)
-    localStorage.setItem(STORAGE_KEY, ok ? ('on' as Pref) : ('off' as Pref))
   })
 
   no.addEventListener('click', () => {
     prompt.hidden = true
     setToggleState(false)
-    localStorage.setItem(STORAGE_KEY, 'asked-no' as Pref)
   })
 
   toggle.addEventListener('click', async () => {
@@ -232,31 +227,14 @@ const audioSrc = wedding.music.src
     }
   })
 
-  const pref = localStorage.getItem(STORAGE_KEY) as Pref | null
-  if (pref === 'on') {
-    // User previously enabled music. Browsers block autoplay without a gesture,
-    // so attach a one-shot listener to the next user interaction and try then.
-    setToggleState(false)
-    const tryOnGesture = async () => {
-      const ok = await tryPlay()
-      if (ok) setToggleState(true)
-      document.removeEventListener('click', tryOnGesture)
-      document.removeEventListener('touchstart', tryOnGesture)
-    }
-    document.addEventListener('click', tryOnGesture, { once: true })
-    document.addEventListener('touchstart', tryOnGesture, { once: true })
-  } else if (pref === 'asked-no' || pref === 'off') {
-    setToggleState(false)
-  } else {
+  // Show the prompt on every fresh page load. The floating toggle only
+  // appears after the user dismisses the prompt (Yes/No or auto-dismiss).
+  window.setTimeout(() => {
+    prompt.hidden = false
     window.setTimeout(() => {
-      prompt.hidden = false
-      // Auto-dismiss after 10s if user doesn't interact — treat as 'asked-no'.
-      window.setTimeout(() => {
-        if (prompt.hidden) return // user already clicked yes/no
-        prompt.hidden = true
-        setToggleState(false)
-        localStorage.setItem(STORAGE_KEY, 'asked-no' as Pref)
-      }, 10000)
-    }, wedding.music.autoPromptDelayMs)
-  }
+      if (prompt.hidden) return // user already clicked yes/no
+      prompt.hidden = true
+      setToggleState(false)
+    }, 10000)
+  }, wedding.music.autoPromptDelayMs)
 </script>
