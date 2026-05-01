@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FBF8F3"/>
+      <stop offset="100%" stop-color="#F5EFE6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <g stroke="#B89968" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.7">
+    <path d="M60 60 C 140 100, 220 160, 280 250"/>
+    <path d="M1140 60 C 1060 100, 980 160, 920 250"/>
+    <path d="M60 570 C 140 530, 220 470, 280 380"/>
+    <path d="M1140 570 C 1060 530, 980 470, 920 380"/>
+  </g>
+  <g fill="#B8D8C0" opacity="0.7">
+    <ellipse cx="160" cy="140" rx="22" ry="9" transform="rotate(-30 160 140)"/>
+    <ellipse cx="220" cy="200" rx="22" ry="9" transform="rotate(-30 220 200)"/>
+    <ellipse cx="1040" cy="140" rx="22" ry="9" transform="rotate(30 1040 140)"/>
+    <ellipse cx="980" cy="200" rx="22" ry="9" transform="rotate(30 980 200)"/>
+    <ellipse cx="160" cy="490" rx="22" ry="9" transform="rotate(30 160 490)"/>
+    <ellipse cx="1040" cy="490" rx="22" ry="9" transform="rotate(-30 1040 490)"/>
+  </g>
+  <g fill="#F0C4C4" opacity="0.85">
+    <circle cx="190" cy="170" r="14"/>
+    <circle cx="1010" cy="170" r="14"/>
+    <circle cx="220" cy="460" r="14"/>
+    <circle cx="980" cy="460" r="14"/>
+  </g>
+
+  <text x="600" y="280" text-anchor="middle"
+        font-family="'Pinyon Script', 'Apple Chancery', cursive"
+        font-size="120" fill="#3A3530">
+    Екатерина &amp; Никита
+  </text>
+
+  <line x1="450" y1="340" x2="750" y2="340" stroke="#B89968" stroke-width="1.5"/>
+
+  <text x="600" y="410" text-anchor="middle"
+        font-family="'Cormorant Garamond', 'Georgia', serif"
+        font-style="italic" font-size="42" fill="#6B5F55">
+    приглашаем вас на нашу свадьбу
+  </text>
+
+  <text x="600" y="495" text-anchor="middle"
+        font-family="'Cormorant Garamond', 'Georgia', serif"
+        font-size="64" font-weight="500" fill="#94793F">
+    04 Июля 2026
+  </text>
+
+  <text x="600" y="555" text-anchor="middle"
+        font-family="'Cormorant Garamond', 'Georgia', serif"
+        font-style="italic" font-size="28" fill="#A39788">
+    Волгоград · Ресторан «Фьюжн»
+  </text>
+</svg>

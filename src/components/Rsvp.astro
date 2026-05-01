@@ -37,8 +37,13 @@ import { wedding } from '../data/wedding'
       </fieldset>
 
       <label class="rsvp-form__label" for="rsvp-captcha" id="rsvp-captcha-label">
-        Загрузка...
+        Сколько будет 2 + 3?
       </label>
+      <noscript>
+        <p class="rsvp-form__noscript">
+          Для отправки формы нужно включить JavaScript. Если не получается — напишите нам в&nbsp;мессенджер.
+        </p>
+      </noscript>
       <input
         type="text"
         id="rsvp-captcha"
@@ -158,6 +163,16 @@ import { wedding } from '../data/wedding'
     margin-top: 12px;
     align-self: stretch;
   }
+  .rsvp-form__noscript {
+    background: rgba(212, 165, 165, 0.15);
+    border: 1px solid var(--accent-rose);
+    border-radius: var(--radius-card);
+    padding: 12px 14px;
+    color: var(--ink-primary);
+    font-family: var(--font-serif);
+    font-size: 14px;
+    margin: 0;
+  }
 </style>
 
 <script>
@@ -175,6 +190,7 @@ import { wedding } from '../data/wedding'
 
   let challenge = makeCaptcha()
   captchaLabel.textContent = challenge.question
+  captchaInput.disabled = false
 
   const validate = () => {
     const checked = [...radios].find((r) => r.checked)
@@ -199,6 +215,23 @@ import { wedding } from '../data/wedding'
     challenge = makeCaptcha()
     captchaLabel.textContent = challenge.question
     captchaInput.value = ''
+  }
+
+  async function sendWithRetry(body: URLSearchParams): Promise<void> {
+    try {
+      await fetch(wedding.rsvp.formActionUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        body,
+      })
+    } catch {
+      await new Promise((r) => window.setTimeout(r, 2000))
+      await fetch(wedding.rsvp.formActionUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        body,
+      })
+    }
   }
 
   form.addEventListener('submit', async (e) => {
@@ -230,11 +263,7 @@ import { wedding } from '../data/wedding'
           : wedding.rsvp.attendanceValues.no
       )
 
-      await fetch(wedding.rsvp.formActionUrl, {
-        method: 'POST',
-        mode: 'no-cors',
-        body,
-      })
+      await sendWithRetry(body)
 
       const msg =
         attendance === 'yes' ? wedding.rsvp.successMessage : wedding.rsvp.declineMessage

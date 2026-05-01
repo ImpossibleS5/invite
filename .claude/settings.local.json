@@ -13,7 +13,22 @@
       "Bash(git init *)",
       "Bash(git branch *)",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(git config *)",
+      "Bash(npm test *)",
+      "Bash(npx tsc *)",
+      "Bash(npm run *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4321/invite/)",
+      "Bash(curl -s http://localhost:4321/invite/)",
+      "Bash(taskkill //F //IM node.exe)",
+      "Bash(git rm *)",
+      "Bash(gh repo *)",
+      "Bash(git push *)",
+      "Bash(gh api *)",
+      "Bash(gh run *)",
+      "Bash(curl -sI https://impossibles5.github.io/invite/)",
+      "Bash(curl -s https://impossibles5.github.io/invite/)",
+      "Bash(git tag *)"
     ]
   }
 }

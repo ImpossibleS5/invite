@@ -126,7 +126,9 @@ const audioSrc = wedding.music.src
 
   function setToggleState(on: boolean) {
     toggle.dataset.on = String(on)
-    toggleIcon.textContent = on ? '♪' : '♪'
+    toggleIcon.textContent = on ? '⏸' : '♪'
+    toggle.setAttribute('aria-label', on ? 'Выключить музыку' : 'Включить музыку')
+    headerBtn?.setAttribute('aria-label', on ? 'Выключить музыку' : 'Включить музыку')
     toggle.hidden = false
   }
 
@@ -181,8 +183,17 @@ const audioSrc = wedding.music.src
 
   const pref = localStorage.getItem(STORAGE_KEY) as Pref | null
   if (pref === 'on') {
+    // User previously enabled music. Browsers block autoplay without a gesture,
+    // so attach a one-shot listener to the next user interaction and try then.
     setToggleState(false)
-    // require user gesture for autoplay; show toggle only
+    const tryOnGesture = async () => {
+      const ok = await tryPlay()
+      if (ok) setToggleState(true)
+      document.removeEventListener('click', tryOnGesture)
+      document.removeEventListener('touchstart', tryOnGesture)
+    }
+    document.addEventListener('click', tryOnGesture, { once: true })
+    document.addEventListener('touchstart', tryOnGesture, { once: true })
   } else if (pref === 'asked-no' || pref === 'off') {
     setToggleState(false)
   } else {

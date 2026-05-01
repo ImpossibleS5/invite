@@ -44,6 +44,18 @@ a:hover { border-color: var(--accent-gold-deep); }
   transform: none;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  .section { opacity: 1; transform: none; }
+}
+
 .section-title {
   font-family: var(--font-serif);
   font-style: italic;
