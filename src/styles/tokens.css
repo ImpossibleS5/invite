@@ -1,0 +1,47 @@
+:root {
+  /* Backgrounds */
+  --bg-base:        #FBF8F3;
+  --bg-paper:       #FFFFFF;
+  --bg-soft:        #F5EFE6;
+
+  /* Ink */
+  --ink-primary:    #3A3530;
+  --ink-secondary:  #6B5F55;
+  --ink-muted:      #A39788;
+
+  /* Accents */
+  --accent-gold:    #B89968;
+  --accent-gold-deep: #94793F;
+  --accent-rose:    #D4A5A5;
+  --accent-rose-deep: #B07878;
+
+  /* Dress-code palette */
+  --pal-blue:    #B8D4E8;
+  --pal-coral:   #F2A48E;
+  --pal-rose:    #F0C4C4;
+  --pal-lavender:#C9BCD8;
+  --pal-mint:    #B8D8C0;
+
+  /* Lines and shadows */
+  --line-soft:    #E8DFD2;
+  --shadow-soft:  0 4px 24px rgba(58, 53, 48, 0.06);
+  --shadow-card:  0 8px 32px rgba(58, 53, 48, 0.08);
+
+  /* Typography */
+  --font-script:  'Pinyon Script', cursive;
+  --font-serif:   'Cormorant Garamond', serif;
+  --font-sans:    'Inter', system-ui, sans-serif;
+
+  /* Layout */
+  --container-w:  480px;
+  --section-gap:  80px;
+  --section-gap-lg: 120px;
+  --radius-card:  16px;
+  --radius-pill:  999px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --section-gap: var(--section-gap-lg);
+  }
+}
