@@ -16,26 +16,26 @@ const menu = [
       <span></span><span></span><span></span>
     </button>
   </div>
-
-  <button class="menu__backdrop" id="menu-backdrop" aria-hidden="true" tabindex="-1"></button>
-
-  <nav class="menu" id="menu" aria-hidden="true">
-    <button class="menu__close" id="menu-close" aria-label="Закрыть меню">×</button>
-    <ul>
-      {menu.map((m) => (
-        <li><a href={m.href} class="menu__link">{m.label}</a></li>
-      ))}
-    </ul>
-  </nav>
 </header>
+
+<button class="menu__backdrop" id="menu-backdrop" aria-hidden="true" tabindex="-1"></button>
+
+<nav class="menu" id="menu" aria-hidden="true">
+  <button class="menu__close" id="menu-close" aria-label="Закрыть меню">×</button>
+  <p class="menu__heading" aria-hidden="true">Меню</p>
+  <ul>
+    {menu.map((m) => (
+      <li><a href={m.href} class="menu__link">{m.label}</a></li>
+    ))}
+  </ul>
+</nav>
 
 <style>
   .header {
     position: sticky;
     top: 0;
     z-index: 50;
-    backdrop-filter: blur(8px);
-    background: rgba(251, 248, 243, 0.85);
+    background: rgba(253, 249, 240, 0.94);
     border-bottom: 1px solid var(--line-soft);
   }
   .header__inner {
@@ -96,11 +96,12 @@ const menu = [
   .menu {
     position: fixed;
     inset: 0;
-    background: var(--bg-base);
+    background: var(--bg-paper);
     transform: translateY(-100%);
     transition: transform 380ms var(--ease-drawer);
     z-index: 60;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 0 20px;
@@ -111,14 +112,14 @@ const menu = [
   @media (min-width: 768px) {
     .menu {
       inset: 0 0 0 auto;
-      width: 320px;
-      background: var(--bg-paper);
+      width: 340px;
+      background: linear-gradient(180deg, #FFFFFF 0%, #FBF4E8 100%);
       transform: translateX(100%);
-      box-shadow: -16px 0 60px rgba(45, 38, 32, 0.25);
-      border-left: 1px solid var(--line-strong);
-      justify-content: flex-start;
+      box-shadow: -24px 0 80px rgba(45, 38, 32, 0.30);
+      border-left: 3px solid var(--accent-gold);
       align-items: flex-start;
-      padding: 72px 36px 36px;
+      justify-content: flex-start;
+      padding: 96px 40px 40px;
       transition: transform 380ms var(--ease-drawer);
     }
   }
@@ -127,28 +128,57 @@ const menu = [
     position: absolute;
     top: 16px;
     right: 16px;
+    width: 40px;
+    height: 40px;
     background: transparent;
-    border: none;
-    font-size: 32px;
+    border: 1px solid var(--line-soft);
+    border-radius: 50%;
+    font-size: 24px;
     color: var(--ink-primary);
     line-height: 1;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background 180ms var(--ease-out), border-color 180ms var(--ease-out);
   }
+  @media (hover: hover) and (pointer: fine) {
+    .menu__close:hover {
+      background: var(--bg-soft);
+      border-color: var(--accent-gold);
+    }
+  }
+
+  .menu__heading {
+    display: none;
+    font-family: var(--font-engraved);
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin: 0 0 24px;
+  }
+  @media (min-width: 768px) {
+    .menu__heading { display: block; }
+  }
+
   .menu ul {
     list-style: none;
     padding: 0;
     margin: 0;
     text-align: center;
+    width: 100%;
   }
   @media (min-width: 768px) {
-    .menu ul { text-align: left; width: 100%; }
+    .menu ul { text-align: left; }
   }
   .menu li + li {
     border-top: 1px solid var(--line-soft);
   }
   .menu__link {
     display: block;
-    padding: 16px 0;
+    padding: 18px 0;
     font-family: var(--font-engraved);
     font-weight: 500;
     font-size: 14px;
@@ -156,7 +186,7 @@ const menu = [
     text-transform: uppercase;
     color: var(--ink-primary);
     border-bottom: none;
-    transition: color 180ms var(--ease-out), letter-spacing 220ms var(--ease-out);
+    transition: color 180ms var(--ease-out), padding-left 220ms var(--ease-out);
   }
   @media (min-width: 768px) {
     .menu__link { font-size: 13px; }
@@ -164,7 +194,9 @@ const menu = [
   @media (hover: hover) and (pointer: fine) {
     .menu__link:hover {
       color: var(--accent-gold-deep);
-      letter-spacing: 0.26em;
+    }
+    @media (min-width: 768px) {
+      .menu__link:hover { padding-left: 6px; }
     }
   }
 </style>
