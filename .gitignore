@@ -8,3 +8,6 @@ dist/
 
 # Astro auto-generated
 src/env.d.ts
+
+# Claude Code harness state (local-only)
+.claude/
