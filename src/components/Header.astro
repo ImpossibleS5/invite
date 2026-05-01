@@ -1,0 +1,146 @@
+---
+const menu = [
+  { href: '#letter', label: 'Приглашение' },
+  { href: '#program', label: 'Программа дня' },
+  { href: '#map', label: 'Карта' },
+  { href: '#dresscode', label: 'Дресс-код' },
+  { href: '#rsvp', label: 'Подтверждение' },
+]
+---
+
+<header class="header" id="header">
+  <div class="header__inner">
+    <a class="header__brand" href="#hero">ПРИГЛАШЕНИЕ</a>
+
+    <button class="header__music" id="music-toggle-header" aria-label="Включить музыку">
+      <span class="header__music-icon" aria-hidden="true">♪</span>
+      <span class="header__music-label">Музыка</span>
+    </button>
+
+    <button class="header__burger" id="header-burger" aria-label="Открыть меню" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <nav class="menu" id="menu" aria-hidden="true">
+    <button class="menu__close" id="menu-close" aria-label="Закрыть меню">×</button>
+    <ul>
+      {menu.map((m) => (
+        <li><a href={m.href} class="menu__link">{m.label}</a></li>
+      ))}
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(8px);
+    background: rgba(251, 248, 243, 0.85);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .header__inner {
+    max-width: var(--container-w);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+  }
+  .header__brand {
+    font-family: var(--font-serif);
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    color: var(--ink-primary);
+    border-bottom: none;
+  }
+  .header__music {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-paper);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-pill);
+    padding: 6px 14px;
+    color: var(--accent-gold-deep);
+    font-size: 13px;
+  }
+  .header__music-icon { font-size: 14px; }
+  .header__burger {
+    background: transparent;
+    border: none;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    padding: 0;
+  }
+  .header__burger span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--ink-primary);
+    margin: 0 auto;
+  }
+  .menu {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-base);
+    transform: translateY(-100%);
+    transition: transform 300ms ease-out;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+  }
+  .menu[data-open='true'] { transform: none; }
+  .menu__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: transparent;
+    border: none;
+    font-size: 32px;
+    color: var(--ink-primary);
+    line-height: 1;
+  }
+  .menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+  }
+  .menu__link {
+    display: block;
+    padding: 16px 0;
+    font-family: var(--font-serif);
+    font-size: 24px;
+    color: var(--ink-primary);
+    border-bottom: none;
+  }
+</style>
+
+<script>
+  const burger = document.getElementById('header-burger')
+  const menu = document.getElementById('menu')
+  const close = document.getElementById('menu-close')
+
+  function setOpen(open: boolean) {
+    if (!menu || !burger) return
+    menu.dataset.open = String(open)
+    menu.setAttribute('aria-hidden', String(!open))
+    burger.setAttribute('aria-expanded', String(open))
+    document.body.style.overflow = open ? 'hidden' : ''
+  }
+
+  burger?.addEventListener('click', () => setOpen(true))
+  close?.addEventListener('click', () => setOpen(false))
+  menu?.querySelectorAll('a').forEach((a) =>
+    a.addEventListener('click', () => setOpen(false))
+  )
+</script>
