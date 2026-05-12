@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config'
 
-const repoName = 'invite'
+const repoName = '04-07-26'
 const ghUser = 'ImpossibleS5'
 
 export default defineConfig({

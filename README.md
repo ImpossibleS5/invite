@@ -15,7 +15,7 @@ npm run test     # runs vitest
 
 Pushes to `main` trigger GitHub Actions, which builds and publishes to GitHub Pages.
 
-Site URL: `https://impossibles5.github.io/invite/`
+Site URL: `https://impossibles5.github.io/04-07-26/`
 
 ## Setting up Google Forms for RSVP
 
